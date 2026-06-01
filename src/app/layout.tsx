@@ -10,28 +10,31 @@ const schibsted = Schibsted_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Keystone Digital Strategy | Strategic Architecture for Enterprise Growth",
+  metadataBase: new URL("https://keystonedigitalstrategy.co.uk"),
+  title: "Keystone Digital Strategy - Leading tech firm",
   description:
-    "Keystone Digital Strategy helps organisations define the strategic architecture that aligns growth, transformation, technology, and operating models.",
+    "Brand identity, web development, and cybersecurity testing — delivered by specialists.",
   keywords: [
-    "strategic consultancy",
-    "operating model design",
-    "transformation leadership",
-    "executive advisory",
-    "strategic architecture",
+    "brand identity",
+    "web development",
+    "cybersecurity testing",
     "digital strategy",
+    "logo design",
+    "penetration testing",
   ],
   openGraph: {
-    title: "Keystone Digital Strategy",
+    title: "Keystone Digital Strategy - Leading tech firm",
     description:
-      "The structure everything else depends on. Strategic consultancy for boards, CEOs, and enterprise leaders.",
+      "Brand identity, web development, and cybersecurity testing — delivered by specialists.",
     type: "website",
     locale: "en_GB",
+    siteName: "Keystone Digital Strategy",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Keystone Digital Strategy",
-    description: "Strategic Architecture for Enterprise Growth",
+    title: "Keystone Digital Strategy - Leading tech firm",
+    description:
+      "Brand identity, web development, and cybersecurity testing — delivered by specialists.",
   },
   robots: {
     index: true,
