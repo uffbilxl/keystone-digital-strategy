@@ -11,72 +11,116 @@ const projects = [
     n: "01",
     name: "On The Go Juice",
     url: "https://onthegojuice.vercel.app",
-    tags: ["Web Development", "Brand Identity"],
+    tags: ["Web Development", "Brand Identity", "Security Tested"],
     sector: "Health & Wellness · UK Startup",
     desc: "Storefront and brand identity for a UK cold-pressed juice startup. Subscription-first design built to convert health-conscious visitors into recurring customers.",
     slides: ["/screenshots/onthegojuice/1.jpg", "/screenshots/onthegojuice/2.jpg", "/screenshots/onthegojuice/3.jpg"],
-    portrait: false,
+    strip: false,
   },
   {
     n: "02",
     name: "BCU Student Computing Association",
     url: "https://bcusca.org",
-    tags: ["Web Development"],
+    tags: ["Web Development", "Security Tested"],
     sector: "Education · University Platform",
     desc: "Career and community hub for Birmingham City University computing students. Surfaces internship listings, events, and resources that bridge study and employment.",
     slides: ["/screenshots/bcusca/1.jpg", "/screenshots/bcusca/2.jpg", "/screenshots/bcusca/3.jpg"],
-    portrait: false,
+    strip: false,
   },
   {
     n: "03",
     name: "Bridge",
     url: "https://bridge-final-web-version.vercel.app",
-    tags: ["Web Development"],
+    tags: ["Web Development", "Security Tested"],
     sector: "Social Impact · Digital Inclusion",
     desc: "Digital inclusion platform giving young people access to devices, learning pathways, mentorship, and AI-guided guidance to tackle the digital divide.",
     slides: ["/screenshots/bridge/1.jpg", "/screenshots/bridge/2.jpg", "/screenshots/bridge/3.jpg"],
-    portrait: false,
+    strip: false,
   },
   {
     n: "04",
     name: "Umrah Marketplace",
     url: "https://umrah-marketplace.vercel.app",
-    tags: ["Web Development"],
+    tags: ["Web Development", "Security Tested"],
     sector: "Retail · E-commerce",
     desc: "Full-service grocery supermarket platform emphasising quality, freshness, and competitive pricing. Clean, conversion-optimised storefront built to drive repeat purchases.",
     slides: ["/screenshots/umrah-marketplace/1.jpg", "/screenshots/umrah-marketplace/2.jpg", "/screenshots/umrah-marketplace/3.jpg"],
-    portrait: false,
+    strip: false,
   },
   {
     n: "05",
     name: "Umrah Marketplace — Mobile",
     url: "https://umrah-marketplace-mobile-app.vercel.app",
-    tags: ["Mobile Development"],
+    tags: ["Mobile Development", "Security Tested"],
     sector: "Retail · Mobile App",
     desc: "Touch-first companion app for the Umrah Marketplace. Rebuilt the shopping experience for mobile users with streamlined navigation and a native-feeling interface.",
-    slides: ["/screenshots/umrah-mobile/1.jpg", "/screenshots/umrah-mobile/2.jpg", "/screenshots/umrah-mobile/3.jpg"],
-    portrait: true,
+    slides: ["/screenshots/umrah-mobile/1.jpg", "/screenshots/umrah-mobile/2.jpg", "/screenshots/umrah-mobile/3.jpg", "/screenshots/umrah-mobile/4.jpg"],
+    strip: true,
   },
   {
     n: "06",
     name: "Sizzle & Seekh",
     url: "https://sizzleandseekh.vercel.app",
-    tags: ["Web Development", "Brand Identity"],
+    tags: ["Web Development", "Brand Identity", "Security Tested"],
     sector: "Food & Beverage · International",
     desc: "Premium website for a halal-certified Pakistani restaurant in Islamabad specialising in grilled burgers and BBQ. Designed to capture walk-in footfall and online orders.",
     slides: ["/screenshots/sizzleandseekh/1.jpg", "/screenshots/sizzleandseekh/2.jpg", "/screenshots/sizzleandseekh/3.jpg"],
-    portrait: false,
+    strip: false,
   },
 ];
 
+// ─── Phone strip (mobile project) ─────────────────────────────────────────────
+function PhoneStrip({ slides }: { slides: string[] }) {
+  return (
+    <div
+      className="relative overflow-hidden"
+      style={{ aspectRatio: "16/9", background: "#050e1a" }}
+    >
+      {/* Subtle gradient edges so phones don't hard-cut */}
+      <div
+        className="absolute inset-0 z-10 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(90deg, #050e1a 0%, transparent 6%, transparent 94%, #050e1a 100%)",
+        }}
+      />
+      <div className="absolute inset-0 flex items-center justify-center gap-2 px-6">
+        {slides.map((src, i) => (
+          <div
+            key={src}
+            className="relative flex-1 overflow-hidden"
+            style={{
+              /* Portrait phone ratio — fills ~88% of container height */
+              aspectRatio: "9/16",
+              maxHeight: "88%",
+              borderRadius: "6px",
+              border: "1px solid rgba(255,255,255,0.1)",
+              flexShrink: 0,
+            }}
+          >
+            <Image
+              src={src}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 25vw, 12vw"
+              className="object-cover"
+              style={{ objectPosition: "top center" }}
+              priority={i === 0}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Carousel ─────────────────────────────────────────────────────────────────
-function Carousel({ slides, portrait }: { slides: string[]; portrait: boolean }) {
+function Carousel({ slides }: { slides: string[] }) {
   const [active, setActive] = useState(0);
   const [hovered, setHovered] = useState(false);
 
   const next = useCallback(() => setActive((i) => (i + 1) % slides.length), [slides.length]);
 
-  // Auto-advance — pauses on hover
   useEffect(() => {
     if (hovered || slides.length <= 1) return;
     const t = setInterval(next, 3200);
@@ -86,23 +130,15 @@ function Carousel({ slides, portrait }: { slides: string[]; portrait: boolean })
   return (
     <div
       className="relative overflow-hidden"
-      style={{
-        aspectRatio: portrait ? "9/16" : "16/9",
-        background: "#050e1a",
-      }}
+      style={{ aspectRatio: "16/9", background: "#050e1a" }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Slides — crossfade */}
       {slides.map((src, i) => (
         <div
           key={src}
           className="absolute inset-0"
-          style={{
-            opacity: i === active ? 1 : 0,
-            transition: "opacity 0.65s ease",
-            zIndex: i === active ? 1 : 0,
-          }}
+          style={{ opacity: i === active ? 1 : 0, transition: "opacity 0.65s ease", zIndex: i === active ? 1 : 0 }}
         >
           <Image
             src={src}
@@ -116,7 +152,7 @@ function Carousel({ slides, portrait }: { slides: string[]; portrait: boolean })
         </div>
       ))}
 
-      {/* Progress bar */}
+      {/* Progress bars */}
       <div className="absolute bottom-0 left-0 right-0 flex gap-px z-10">
         {slides.map((_, i) => (
           <button
@@ -124,59 +160,60 @@ function Carousel({ slides, portrait }: { slides: string[]; portrait: boolean })
             aria-label={`Slide ${i + 1}`}
             onClick={() => setActive(i)}
             className="flex-1 h-0.5 transition-all duration-300"
-            style={{
-              background: i === active
-                ? "#AD8A52"
-                : "rgba(255,255,255,0.2)",
-            }}
+            style={{ background: i === active ? "#AD8A52" : "rgba(255,255,255,0.2)" }}
           />
         ))}
       </div>
 
-      {/* Prev / Next arrows — appear on hover */}
-      {slides.length > 1 && (
+      {/* Arrows */}
+      {slides.length > 1 && hovered && (
         <>
           <button
             aria-label="Previous"
             onClick={() => setActive((i) => (i - 1 + slides.length) % slides.length)}
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200"
-            style={{
-              background: "rgba(12,35,64,0.7)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              color: "rgba(255,255,255,0.7)",
-              opacity: hovered ? 1 : 0,
-            }}
-          >
-            ‹
-          </button>
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full"
+            style={{ background: "rgba(12,35,64,0.75)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.75)" }}
+          >‹</button>
           <button
             aria-label="Next"
             onClick={next}
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200"
-            style={{
-              background: "rgba(12,35,64,0.7)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              color: "rgba(255,255,255,0.7)",
-              opacity: hovered ? 1 : 0,
-            }}
-          >
-            ›
-          </button>
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full"
+            style={{ background: "rgba(12,35,64,0.75)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.75)" }}
+          >›</button>
         </>
       )}
 
-      {/* Slide counter */}
+      {/* Counter */}
       <div
-        className="absolute top-3 right-3 z-10 text-xs font-medium tabular-nums px-2 py-0.5 rounded-sm"
-        style={{
-          background: "rgba(12,35,64,0.7)",
-          color: "rgba(255,255,255,0.5)",
-          backdropFilter: "blur(4px)",
-        }}
+        className="absolute top-3 right-3 z-10 text-xs font-medium tabular-nums px-2 py-0.5"
+        style={{ background: "rgba(12,35,64,0.7)", color: "rgba(255,255,255,0.5)", backdropFilter: "blur(4px)" }}
       >
         {active + 1} / {slides.length}
       </div>
     </div>
+  );
+}
+
+// ─── Tag badge ────────────────────────────────────────────────────────────────
+function Tag({ label }: { label: string }) {
+  const isSecurity = label === "Security Tested";
+  return (
+    <span
+      className="text-xs font-medium px-2.5 py-1 inline-flex items-center gap-1.5"
+      style={{
+        color: isSecurity ? "#6ee7b7" : "#AD8A52",
+        border: `1px solid ${isSecurity ? "rgba(110,231,183,0.25)" : "rgba(173,138,82,0.22)"}`,
+        background: isSecurity ? "rgba(110,231,183,0.05)" : "transparent",
+      }}
+    >
+      {isSecurity && (
+        <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path d="M6 1L1 3v4c0 2.5 2.2 4.4 5 5 2.8-.6 5-2.5 5-5V3L6 1z" />
+          <path d="M3.5 6l1.5 1.5 3-3" />
+        </svg>
+      )}
+      {label}
+    </span>
   );
 }
 
@@ -188,68 +225,41 @@ function ProjectCard({ project, index, inView }: { project: typeof projects[0]; 
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: index * 0.09 }}
       className="group flex flex-col overflow-hidden"
-      style={{
-        background: "rgba(10,29,53,0.95)",
-        border: "1px solid rgba(159,176,190,0.08)",
-        transition: "border-color 0.3s ease",
-      }}
+      style={{ background: "rgba(10,29,53,0.95)", border: "1px solid rgba(159,176,190,0.08)", transition: "border-color 0.3s ease" }}
       whileHover={{ borderColor: "rgba(173,138,82,0.25)" } as never}
     >
-      {/* Carousel */}
+      {/* Media */}
       <div className="relative">
-        <Carousel slides={project.slides} portrait={project.portrait} />
+        {project.strip ? (
+          <PhoneStrip slides={project.slides} />
+        ) : (
+          <Carousel slides={project.slides} />
+        )}
 
-        {/* "View Live" overlay on screenshot hover */}
+        {/* View Live overlay */}
         <a
           href={project.url}
           target="_blank"
           rel="noopener noreferrer"
           className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto"
-          style={{
-            background: "rgba(12,35,64,0.7)",
-            transition: "opacity 0.25s ease",
-            backdropFilter: "blur(2px)",
-          }}
+          style={{ background: "rgba(12,35,64,0.7)", transition: "opacity 0.25s ease", backdropFilter: "blur(2px)" }}
         >
-          <span
-            style={{
-              color: "#C2A065",
-              fontSize: "0.85rem",
-              fontWeight: 600,
-              border: "1px solid rgba(173,138,82,0.45)",
-              padding: "9px 22px",
-              letterSpacing: "0.02em",
-            }}
-          >
+          <span style={{ color: "#C2A065", fontSize: "0.85rem", fontWeight: 600, border: "1px solid rgba(173,138,82,0.45)", padding: "9px 22px" }}>
             View Live →
           </span>
         </a>
       </div>
 
-      {/* Card body */}
+      {/* Body */}
       <div className="flex flex-col flex-1 p-6 gap-4">
-        {/* Tags + number */}
-        <div className="flex items-center justify-between gap-3 flex-wrap">
-          <div className="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs font-medium px-2.5 py-1"
-                style={{ color: "#AD8A52", border: "1px solid rgba(173,138,82,0.22)" }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <span className="text-xs tabular-nums" style={{ color: "rgba(255,255,255,0.15)" }}>{project.n}</span>
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => <Tag key={tag} label={tag} />)}
         </div>
 
         {/* Name + sector */}
         <div>
-          <h3
-            className="font-semibold text-white"
-            style={{ fontSize: "clamp(1rem,1.4vw,1.2rem)", letterSpacing: "-0.015em", lineHeight: "1.3", marginBottom: "3px" }}
-          >
+          <h3 className="font-semibold text-white" style={{ fontSize: "clamp(1rem,1.4vw,1.2rem)", letterSpacing: "-0.015em", lineHeight: "1.3", marginBottom: "3px" }}>
             {project.name}
           </h3>
           <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "11px" }}>{project.sector}</p>
