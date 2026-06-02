@@ -110,12 +110,6 @@ function FlipCard({ member, index, inView }: { member: typeof team[0]; index: nu
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5">
-            <span className="text-xs" style={{ color: "var(--hair)", letterSpacing: "0.1em" }}>Tap to read bio</span>
-            <svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="var(--hair)" strokeWidth="1.5">
-              <path d="M3 8h10M9 4l4 4-4 4" />
-            </svg>
-          </div>
         </div>
 
         {/* Back */}
