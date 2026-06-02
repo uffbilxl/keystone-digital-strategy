@@ -4,10 +4,10 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const team = [
-  { role: "Full Stack Developer", discipline: "Computer Science with AI", icon: "code" },
-  { role: "Full Stack Developer", discipline: "Computer Science with AI", icon: "code" },
-  { role: "Penetration Tester", discipline: "Cyber Security Graduate", icon: "shield" },
-  { role: "Security Analyst", discipline: "Cyber Security Graduate", icon: "shield" },
+  { role: "Full Stack Developer", discipline: "Computer Science with AI", initials: "FS" },
+  { role: "Full Stack Developer", discipline: "Computer Science with AI", initials: "FS" },
+  { role: "Penetration Tester", discipline: "Cyber Security Graduate", initials: "PT" },
+  { role: "Security Analyst", discipline: "Cyber Security Graduate", initials: "SA" },
 ];
 
 export function About() {
@@ -97,35 +97,40 @@ export function About() {
             The Team
           </motion.p>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {team.map((member, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: 0.2 + i * 0.07 }}
-                className="flex flex-col justify-between p-6"
-                style={{
-                  background: "#fff",
-                  border: "1px solid var(--hair)",
-                  minHeight: "160px",
-                }}
+                className="flex flex-col gap-5 p-6"
+                style={{ background: "#fff", border: "1px solid var(--hair)" }}
               >
-                {/* Number */}
-                <span className="text-xs" style={{ color: "var(--hair)", letterSpacing: "0.12em" }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+                {/* Avatar */}
+                <div
+                  className="flex items-center justify-center rounded-full flex-shrink-0"
+                  style={{
+                    width: "56px",
+                    height: "56px",
+                    background: "linear-gradient(135deg, #0C2340 0%, #1a3a5c 100%)",
+                    border: "1px solid rgba(159,176,190,0.2)",
+                  }}
+                >
+                  <span
+                    className="font-semibold"
+                    style={{ color: "#C2A065", fontSize: "13px", letterSpacing: "0.08em" }}
+                  >
+                    {member.initials}
+                  </span>
+                </div>
 
-                {/* Role info */}
-                <div className="flex flex-col gap-1 pt-6">
-                  <div
-                    className="w-5 h-px mb-3"
-                    style={{ background: "#AD8A52" }}
-                  />
-                  <p className="text-sm font-semibold" style={{ color: "var(--navy)", letterSpacing: "-0.01em", lineHeight: "1.35" }}>
+                {/* Text */}
+                <div className="flex flex-col gap-1">
+                  <p className="font-semibold text-sm" style={{ color: "var(--navy)", letterSpacing: "-0.01em" }}>
                     {member.role}
                   </p>
-                  <p className="text-xs" style={{ color: "var(--mist)", letterSpacing: "0.02em" }}>
+                  <p className="text-xs leading-relaxed" style={{ color: "var(--mist)" }}>
                     {member.discipline}
                   </p>
                 </div>
