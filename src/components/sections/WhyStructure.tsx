@@ -56,26 +56,15 @@ export function WhyStructure() {
       <div ref={ref} className="max-w-6xl mx-auto px-6 md:px-10">
 
         {/* Header */}
-        <div className="flex items-end justify-between mb-16">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5 }}
-            className="text-xs font-medium uppercase"
-            style={{ color: "#AD8A52", letterSpacing: "0.28em" }}
-          >
-            What We Do
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="hidden md:block text-xs font-semibold text-white"
-            style={{ letterSpacing: "-0.01em", fontSize: "1.5rem", color: "rgba(255,255,255,0.08)", fontWeight: 700 }}
-          >
-            Three disciplines
-          </motion.p>
-        </div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5 }}
+          className="text-xs font-medium uppercase mb-16"
+          style={{ color: "#AD8A52", letterSpacing: "0.28em" }}
+        >
+          What We Do
+        </motion.p>
 
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: "rgba(159,176,190,0.1)" }}>
@@ -85,7 +74,7 @@ export function WhyStructure() {
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: i * 0.1 }}
-              className="relative flex flex-col justify-between p-10 overflow-hidden"
+              className="relative flex flex-col p-10 overflow-hidden"
               style={{
                 background: hovered === p.n ? "rgba(255,255,255,0.05)" : "rgba(10,29,53,0.95)",
                 minHeight: "420px",
@@ -100,36 +89,26 @@ export function WhyStructure() {
                 className="absolute font-bold select-none pointer-events-none"
                 style={{
                   fontSize: "10rem",
-                  color: "rgba(255,255,255,0.03)",
+                  color: hovered === p.n ? "rgba(173,138,82,0.05)" : "rgba(255,255,255,0.03)",
                   lineHeight: 1,
                   bottom: "-16px",
                   right: "-8px",
                   letterSpacing: "-0.05em",
                   transition: "color 0.3s ease",
-                  ...(hovered === p.n ? { color: "rgba(173,138,82,0.06)" } : {}),
                 }}
               >
                 {p.n}
               </span>
 
-              {/* Top: number + icon */}
-              <div className="flex items-start justify-between">
-                <span
-                  className="text-xs font-medium"
-                  style={{
-                    color: hovered === p.n ? "#AD8A52" : "rgba(255,255,255,0.3)",
-                    letterSpacing: "0.14em",
-                    transition: "color 0.3s ease",
-                  }}
-                >
-                  {p.n}
-                </span>
-                <div style={{ color: hovered === p.n ? "#C2A065" : "rgba(255,255,255,0.25)", transition: "color 0.3s ease" }}>
-                  {p.icon}
-                </div>
+              {/* Icon */}
+              <div
+                className="mb-10"
+                style={{ color: hovered === p.n ? "#C2A065" : "rgba(255,255,255,0.3)", transition: "color 0.3s ease" }}
+              >
+                {p.icon}
               </div>
 
-              {/* Bottom: title + desc + tags */}
+              {/* Title + desc + tags — all from top so they align */}
               <div className="flex flex-col gap-5 relative z-10">
                 <div>
                   <h3
