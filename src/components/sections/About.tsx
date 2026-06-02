@@ -52,6 +52,24 @@ const BugIcon = ({ size = 22 }: { size?: number }) => (
     <path d="M12 20v-9M6.53 9C4.6 8.8 3 7.1 3 5M6 13H2M3 21c0-3 1.5-6 3-8M20.97 5c0 2.1-1.6 3.8-3.5 4M22 13h-4M18 13c1.5 2 3 5 3 8" />
   </svg>
 );
+const PenIcon = ({ size = 22 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+  </svg>
+);
+const LayersIcon = ({ size = 22 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+    <polyline points="2 17 12 22 22 17" />
+    <polyline points="2 12 12 17 22 12" />
+  </svg>
+);
+const EyeIcon = ({ size = 22 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
 
 const team = [
   {
@@ -76,11 +94,11 @@ const team = [
     bio: "Most of what I do sits somewhere between security, startups, and building things for people who are trying to build things themselves — which sounds chaotic but has turned out to be a decent way to learn quickly.\n\nI have been involved in founding and co-founding several initiatives across technology and community building. Each started from a version of the same observation: the infrastructure around people who want to create is usually worse than it needs to be, and fixing that is worth the effort.\n\nOn the security side, I work on finding the gaps before someone else does — a job that rewards genuine curiosity more than most. The combination of that and the startup work has given me a clear picture of what it looks like when security is treated as an afterthought, and why it should not be.",
   },
   {
-    role: "Security Analyst",
-    discipline: "Cyber Security Graduate",
-    icons: [ShieldIcon, SearchIcon, LockIcon],
-    company: "Security · Ethical Hacking",
-    bio: "I spend a healthy amount of time breaking things legally, fixing them properly, and occasionally staring at error messages like they have personally offended me. Through hands-on projects I have built solid skills in Python, Linux, networking, and ethical hacking, with a focus on solving real-world problems in a field that genuinely refuses to sit still.\n\nAlongside the technical work, I am involved in community building and practical education — running events, pushing for learning that actually feels useful, and creating opportunities that go beyond what looks good on paper. I believe the best security work comes from people who are as interested in the human side of systems as the technical one.",
+    role: "UI/UX Designer",
+    discipline: "",
+    icons: [PenIcon, LayersIcon, EyeIcon],
+    company: "Design · Brand · Experience",
+    bio: "I work at the intersection of how something looks and how something feels — which are rarely as different as people assume. Good design is mostly decisions: what to include, what to remove, and what the person on the other side actually needs to understand.\n\nI have worked across brand identity, digital product design, and the kind of end-to-end UX work where the brief is vague and the constraints are real. I am drawn to projects where design is treated as thinking, not decoration — where the visual choices carry an argument rather than just filling space.\n\nI care about consistency, clarity, and work that holds up over time rather than just looking good in a presentation.",
   },
 ];
 
@@ -149,9 +167,6 @@ function FlipCard({ member, index, inView }: { member: TeamMember; index: number
           <div>
             <p className="font-semibold mb-2" style={{ color: "var(--navy)", fontSize: "1.15rem", letterSpacing: "-0.015em" }}>
               {member.role}
-            </p>
-            <p className="text-sm mb-3" style={{ color: "var(--mist)" }}>
-              {member.discipline}
             </p>
             <p className="text-xs" style={{ color: "#AD8A52", letterSpacing: "0.04em" }}>
               {member.company}
