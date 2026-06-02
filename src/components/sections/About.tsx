@@ -4,10 +4,48 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const team = [
-  { role: "Full Stack Developer", discipline: "Computer Science with AI", initials: "FS" },
-  { role: "Full Stack Developer", discipline: "Computer Science with AI", initials: "FS" },
-  { role: "Penetration Tester", discipline: "Cyber Security Graduate", initials: "PT" },
-  { role: "Security Analyst", discipline: "Cyber Security Graduate", initials: "SA" },
+  {
+    role: "Full Stack Developer",
+    discipline: "Computer Science with AI",
+    icon: (
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0C2340" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6" />
+        <polyline points="8 6 2 12 8 18" />
+      </svg>
+    ),
+  },
+  {
+    role: "Full Stack Developer",
+    discipline: "Computer Science with AI",
+    icon: (
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0C2340" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6" />
+        <polyline points="8 6 2 12 8 18" />
+      </svg>
+    ),
+  },
+  {
+    role: "Penetration Tester",
+    discipline: "Cyber Security Graduate",
+    icon: (
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0C2340" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="M9 12l2 2 4-4" />
+      </svg>
+    ),
+  },
+  {
+    role: "Security Analyst",
+    discipline: "Cyber Security Graduate",
+    icon: (
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0C2340" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        <line x1="11" y1="8" x2="11" y2="14" />
+        <line x1="8" y1="11" x2="14" y2="11" />
+      </svg>
+    ),
+  },
 ];
 
 export function About() {
@@ -107,22 +145,17 @@ export function About() {
                 className="flex flex-col gap-5 p-6"
                 style={{ background: "#fff", border: "1px solid var(--hair)" }}
               >
-                {/* Avatar */}
+                {/* Icon */}
                 <div
                   className="flex items-center justify-center rounded-full flex-shrink-0"
                   style={{
                     width: "56px",
                     height: "56px",
-                    background: "linear-gradient(135deg, #0C2340 0%, #1a3a5c 100%)",
-                    border: "1px solid rgba(159,176,190,0.2)",
+                    background: "var(--paper)",
+                    border: "1px solid var(--hair)",
                   }}
                 >
-                  <span
-                    className="font-semibold"
-                    style={{ color: "#C2A065", fontSize: "13px", letterSpacing: "0.08em" }}
-                  >
-                    {member.initials}
-                  </span>
+                  {member.icon}
                 </div>
 
                 {/* Text */}
