@@ -165,20 +165,34 @@ function Carousel({ slides }: { slides: string[] }) {
         ))}
       </div>
 
-      {/* Arrows */}
-      {slides.length > 1 && hovered && (
+      {/* Arrows — always visible, brighten on hover */}
+      {slides.length > 1 && (
         <>
           <button
             aria-label="Previous"
             onClick={() => setActive((i) => (i - 1 + slides.length) % slides.length)}
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full"
-            style={{ background: "rgba(12,35,64,0.75)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.75)" }}
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200"
+            style={{
+              background: "rgba(12,35,64,0.65)",
+              border: "1px solid rgba(255,255,255,0.18)",
+              color: "rgba(255,255,255,0.55)",
+              fontSize: "18px",
+              lineHeight: 1,
+              opacity: hovered ? 1 : 0.55,
+            }}
           >‹</button>
           <button
             aria-label="Next"
             onClick={next}
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full"
-            style={{ background: "rgba(12,35,64,0.75)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.75)" }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200"
+            style={{
+              background: "rgba(12,35,64,0.65)",
+              border: "1px solid rgba(255,255,255,0.18)",
+              color: "rgba(255,255,255,0.55)",
+              fontSize: "18px",
+              lineHeight: 1,
+              opacity: hovered ? 1 : 0.55,
+            }}
           >›</button>
         </>
       )}
