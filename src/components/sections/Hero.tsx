@@ -164,6 +164,9 @@ export function Hero() {
   const { scrollY } = useScroll();
   const contentY = useTransform(scrollY, [0, 700], [0, -90]);
   const contentOpacity = useTransform(scrollY, [0, 450], [1, 0]);
+  // Stats stay fully visible until 400px scroll, then fade slowly to 900px
+  const statsOpacity = useTransform(scrollY, [400, 900], [1, 0]);
+  const statsY = useTransform(scrollY, [0, 900], [0, -40]);
   const archScrollY = useTransform(scrollY, [0, 700], [0, -45]);
   const particlesScrollY = useTransform(scrollY, [0, 700], [0, 32]);
 
@@ -279,10 +282,10 @@ export function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Stats strip */}
+      {/* Stats strip — own opacity so it lingers much longer on scroll */}
       <motion.div
         className="relative max-w-6xl mx-auto w-full px-6 md:px-10 pb-10"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.06)", zIndex: 10, y: contentY, opacity: contentOpacity }}
+        style={{ borderTop: "1px solid rgba(255,255,255,0.06)", zIndex: 10, y: statsY, opacity: statsOpacity }}
       >
         <div className="pt-7 flex items-center gap-8 md:gap-14">
           {[
