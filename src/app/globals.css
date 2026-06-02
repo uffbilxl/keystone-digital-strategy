@@ -12,6 +12,37 @@
   --hair: #E3E7EB;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-cinema: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Cinematic keyframes ─────────────────────────────── */
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-14px) rotate(2deg); }
+  66%       { transform: translateY(8px) rotate(-1deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+@keyframes shimmer-h {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+
+@keyframes scan-line {
+  0%   { transform: translateY(-100vh); opacity: 0; }
+  10%  { opacity: 0.04; }
+  90%  { opacity: 0.04; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+@keyframes arch-draw {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
 }
 
 * {
@@ -145,4 +176,55 @@ button:active, a:active {
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 25%, #000 75%, transparent 100%);
   mask-image: linear-gradient(180deg, transparent 0%, #000 25%, #000 75%, transparent 100%);
   pointer-events: none;
+}
+
+/* Floating animation utility */
+.float-slow {
+  animation: float-slow 12s ease-in-out infinite;
+}
+
+/* Gold shimmer on text */
+.text-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.text-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(194,160,101,0.28) 50%, transparent 60%);
+  animation: shimmer-h 3.5s ease-in-out infinite;
+}
+
+/* Magnetic card depth shadow on hover */
+.card-depth {
+  transition: box-shadow 0.35s var(--ease-cinema), transform 0.35s var(--ease-cinema);
+}
+.card-depth:hover {
+  box-shadow: 0 20px 60px rgba(12,35,64,0.14), 0 4px 16px rgba(12,35,64,0.08);
+}
+
+/* Glow ring – used on interactive elements */
+.glow-ring {
+  box-shadow: 0 0 0 0 rgba(173,138,82,0);
+  transition: box-shadow 0.3s ease;
+}
+.glow-ring:hover {
+  box-shadow: 0 0 0 3px rgba(173,138,82,0.2), 0 0 24px rgba(173,138,82,0.08);
+}
+
+/* Cinematic scan line overlay */
+.scan-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255,255,255,0.007) 2px,
+    rgba(255,255,255,0.007) 3px
+  );
+  pointer-events: none;
+  z-index: 1;
 }
