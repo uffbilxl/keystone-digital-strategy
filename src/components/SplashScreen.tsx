@@ -7,29 +7,45 @@ interface SplashScreenProps {
   onComplete: () => void;
 }
 
-// The arch animation itself — identical brand shape, drawn with pathLength
+// Fully self-contained, responsive arch — square container eliminates the
+// non-square SVG / overflow:visible centering issue that caused the right-shift.
 function SplashArch() {
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 220, height: 260 }}>
-      {/* Soft bloom behind arch */}
+    // clamp: 200px min, 52vw on mobile, 260px max — never overflows on any screen
+    <div
+      style={{
+        position: "relative",
+        width: "clamp(200px, 52vw, 260px)",
+        height: "clamp(200px, 52vw, 260px)",
+        flexShrink: 0,
+      }}
+    >
+      {/* Bloom sits inside the container, centred, doesn't affect layout */}
       <motion.div
-        className="absolute"
         style={{
-          inset: "10%",
-          background: "radial-gradient(ellipse at 50% 50%, rgba(173,138,82,0.14), transparent 65%)",
-          filter: "blur(32px)",
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "130%",
+          height: "130%",
+          background: "radial-gradient(ellipse, rgba(173,138,82,0.12), transparent 65%)",
+          filter: "blur(40px)",
+          pointerEvents: "none",
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: [0, 1, 0.7] }}
         transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
       />
 
+      {/* Square SVG — viewBox 100×100, rendered 100%×100% of container.
+          No overflow:visible — everything fits inside the viewBox. */}
       <svg
         viewBox="0 0 100 100"
-        width="220"
-        height="260"
+        width="100%"
+        height="100%"
         fill="none"
-        style={{ overflow: "visible" }}
+        style={{ display: "block" }}
       >
         {/* Arch body */}
         <motion.path
@@ -42,13 +58,14 @@ function SplashArch() {
           transition={{ duration: 1.6, delay: 0.3, ease: "easeInOut" }}
         />
 
-        {/* Foundation bar */}
-        <motion.rect
-          x="6.5" y="85.6" width="87" height="3" rx="0.6"
-          fill="rgba(173,138,82,0.25)"
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 1 }}
-          style={{ transformOrigin: "50px 87px" }}
+        {/* Foundation bar — uses pathLength so no transform-origin issues in SVG */}
+        <motion.line
+          x1="6.5" y1="87.1" x2="93.5" y2="87.1"
+          stroke="rgba(173,138,82,0.28)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
           transition={{ duration: 0.7, delay: 1.7, ease: [0.16, 1, 0.3, 1] }}
         />
 
@@ -62,7 +79,7 @@ function SplashArch() {
           <motion.line
             key={i}
             x1={ln[0]} y1={ln[1]} x2={ln[2]} y2={ln[3]}
-            stroke="rgba(173,138,82,0.4)"
+            stroke="rgba(173,138,82,0.38)"
             strokeWidth="0.8"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 1 }}
@@ -74,25 +91,25 @@ function SplashArch() {
         <motion.polygon
           points="41.5,8.5 58.5,8.5 55.8,27.5 44.2,27.5"
           fill="#AD8A52"
-          stroke="rgba(255,255,255,0.15)"
-          strokeWidth="1"
+          stroke="rgba(255,255,255,0.12)"
+          strokeWidth="0.8"
           strokeLinejoin="round"
-          initial={{ opacity: 0, y: -12, scale: 0.7 }}
+          initial={{ opacity: 0, y: -10, scale: 0.75 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          style={{ transformOrigin: "50px 18px" }}
+          style={{ transformOrigin: "50% 18%" }}
           transition={{ duration: 0.6, delay: 2.35, ease: [0.16, 1, 0.3, 1] }}
         />
 
-        {/* Pulse ripple on completion */}
+        {/* Completion ripple */}
         <motion.circle
           cx="50" cy="47" r="38"
           fill="none"
-          stroke="rgba(173,138,82,0.2)"
+          stroke="rgba(173,138,82,0.18)"
           strokeWidth="0.5"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: [0.9, 1.08], opacity: [0, 0.6, 0] }}
-          style={{ transformOrigin: "50px 47px" }}
-          transition={{ duration: 0.9, delay: 2.85, ease: "easeOut" }}
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: [0, 0.6, 0], scale: [0.92, 1.07] }}
+          style={{ transformOrigin: "50% 47%" }}
+          transition={{ duration: 1, delay: 2.85, ease: "easeOut" }}
         />
       </svg>
     </div>
@@ -106,7 +123,6 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
   );
 
   useEffect(() => {
-    // Already shown this session — skip immediately
     if (skip || sessionStorage.getItem("ks_splash") === "1") {
       onComplete();
       return;
@@ -119,7 +135,7 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
     }, 3500);
 
     return () => clearTimeout(exitTimer);
-  }, [onComplete]);
+  }, [onComplete, skip]);
 
   if (skip) return null;
 
@@ -133,29 +149,21 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
           style={{ background: "#0C2340" }}
         >
-          {/* Subtle grid */}
           <div className="grid-overlay" style={{ opacity: 0.1 }} />
 
-          {/* Ambient glow */}
-          <motion.div
-            className="absolute pointer-events-none"
+          {/* Centred column — items-center ensures both arch and wordmark are centred */}
+          <div
             style={{
-              top: "15%", left: "50%", transform: "translateX(-50%)",
-              width: "500px", height: "500px",
-              background: "radial-gradient(circle, rgba(173,138,82,0.08), transparent 65%)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "2rem",
             }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.5 }}
-          />
-
-          <div className="flex flex-col items-center gap-8">
-            {/* Arch draw — the entry ritual */}
+          >
             <SplashArch />
 
-            {/* Wordmark fades in after arch is mostly drawn */}
             <motion.div
-              className="flex flex-col items-center gap-1.5"
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 2.0, ease: [0.16, 1, 0.3, 1] }}
@@ -163,14 +171,13 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
               <span className="font-semibold text-white" style={{ fontSize: "20px", letterSpacing: "-0.01em" }}>
                 Keystone
               </span>
-              <span className="font-medium text-white/40" style={{ fontSize: "10px", letterSpacing: "0.04em" }}>
+              <span className="font-medium" style={{ color: "rgba(255,255,255,0.35)", fontSize: "10px", letterSpacing: "0.04em" }}>
                 Digital Strategy
               </span>
             </motion.div>
           </div>
         </motion.div>
       ) : (
-        /* Split exit — panels slide away */
         <div key="split" className="fixed inset-0 z-[9999] pointer-events-none">
           <motion.div
             initial={{ y: 0 }}
