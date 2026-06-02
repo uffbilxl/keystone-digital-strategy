@@ -1,52 +1,174 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const team = [
   {
     role: "Full Stack Developer",
     discipline: "Computer Science with AI",
-    icon: (
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0C2340" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" />
-        <polyline points="8 6 2 12 8 18" />
-      </svg>
-    ),
+    icon: "code",
+    company: "Incoming Technology Developer Intern @ Barclays",
+    bio: "Studying Computer Science with AI at Birmingham City University — a degree that has a habit of pulling in every direction at once, which turns out to be excellent preparation for working in tech. Spent the past couple of years building full-stack applications, experimenting with machine learning pipelines, and getting comfortable with the kind of productive ambiguity that comes with working at the edge of what AI can currently do.\n\nIncoming Technology Developer Intern at Barclays, where the scale of the engineering problems is matched only by the weight of the responsibility behind them. I'm drawn to work where the decisions made early save someone a lot of pain later — whether that's in architecture, data design, or the unglamorous business of writing tests. When not writing code, probably reading about it, or convincing myself the next side project will be the one that sticks.",
   },
   {
     role: "Full Stack Developer",
     discipline: "Computer Science with AI",
-    icon: (
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0C2340" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" />
-        <polyline points="8 6 2 12 8 18" />
-      </svg>
-    ),
+    icon: "code",
+    company: "Incoming Summer Intern @ AVEVA",
+    bio: "Computer Science with AI student at Birmingham City University. I focus on building things that are actually useful — clean interfaces, reliable back-ends, and systems smart enough to handle the tedious work without making a mess of the interesting parts.\n\nIncoming Summer Intern at AVEVA, working on software that underpins industrial infrastructure at a global scale. There is something satisfying about engineering at that level — where what you ship eventually runs in the background of industries that do not get to have outages. I'm interested in the point where AI becomes a genuine engineering tool rather than a marketing claim, and I try to build with that distinction in mind.\n\nOutside of coursework, I contribute to projects where the brief is usually some version of 'make this smarter' — which I find suits me.",
   },
   {
     role: "Penetration Tester",
     discipline: "Cyber Security Graduate",
-    icon: (
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0C2340" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        <path d="M9 12l2 2 4-4" />
-      </svg>
-    ),
+    icon: "shield",
+    company: "Incoming Cyber Security Analyst Intern @ National Gas",
+    bio: "Cyber Security student at BCU. Most of what I do sits somewhere between security, startups, and student communities — which sounds chaotic but has turned out to be a decent way to learn quickly.\n\nIncoming Cyber Security Analyst Intern at National Gas. Founder of Unihack, co-founder of Zentic Health, and creator of BCU Innovation Labs. Each of those started from a version of the same observation: the infrastructure around students who want to build things is usually worse than it needs to be, and fixing that is worth the effort.\n\nOn the security side, I work on finding the gaps before someone else does — which is a job that rewards genuine curiosity more than most. The combination of that and the startup work has given me a fairly clear picture of what it looks like when security is treated as an afterthought, and why it shouldn't be.",
   },
   {
     role: "Security Analyst",
     discipline: "Cyber Security Graduate",
-    icon: (
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0C2340" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="11" cy="11" r="8" />
-        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        <line x1="11" y1="8" x2="11" y2="14" />
-        <line x1="8" y1="11" x2="14" y2="11" />
-      </svg>
-    ),
+    icon: "shield",
+    company: "BCU · BCUSCA Vice President",
+    bio: "Currently running bsc --degree=cybersecurity at Birmingham City University — where I spend a healthy amount of time breaking things legally, fixing them properly, and occasionally staring at error messages like they have personally offended me. Through coursework and hands-on projects I have built solid skills in Python, Linux, networking, and ethical hacking, with a focus on solving real-world problems in a field that genuinely refuses to sit still.\n\nAlongside the degree, I'm Course Rep for Cyber Security and a Visiting Demonstrator — helping staff and students navigate the same organised chaos I voluntarily enrolled in. I'm also Vice President for Cyber at the BCU Student Computing Association (BCUSCA), where I run events, push practical learning, and try to build opportunities that actually feel useful — not just good on paper.",
   },
 ];
+
+function FlipCard({ member, index, inView }: { member: typeof team[0]; index: number; inView: boolean }) {
+  const [flipped, setFlipped] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: 0.2 + index * 0.08 }}
+      style={{ perspective: "1200px", height: "320px" }}
+      onClick={() => setFlipped(!flipped)}
+      className="cursor-pointer"
+    >
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          transformStyle: "preserve-3d",
+          transition: "transform 0.6s cubic-bezier(0.23,1,0.32,1)",
+          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+        }}
+      >
+        {/* Front */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            background: "#fff",
+            border: "1px solid var(--hair)",
+            padding: "28px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* Icon */}
+          <div
+            style={{
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              background: "var(--paper)",
+              border: "1px solid var(--hair)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {member.icon === "shield" ? (
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#0C2340" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#0C2340" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
+              </svg>
+            )}
+          </div>
+
+          <div>
+            <p className="font-semibold mb-1" style={{ color: "var(--navy)", fontSize: "0.95rem", letterSpacing: "-0.01em" }}>
+              {member.role}
+            </p>
+            <p className="text-xs mb-3" style={{ color: "var(--mist)" }}>
+              {member.discipline}
+            </p>
+            <p className="text-xs" style={{ color: "#AD8A52", letterSpacing: "0.02em" }}>
+              {member.company}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs" style={{ color: "var(--hair)", letterSpacing: "0.1em" }}>Tap to read bio</span>
+            <svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="var(--hair)" strokeWidth="1.5">
+              <path d="M3 8h10M9 4l4 4-4 4" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Back */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+            background: "var(--navy)",
+            border: "1px solid rgba(159,176,190,0.12)",
+            padding: "24px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+            overflow: "hidden",
+          }}
+        >
+          <div className="flex items-center justify-between flex-shrink-0">
+            <p className="text-xs font-semibold" style={{ color: "#AD8A52", letterSpacing: "0.14em", textTransform: "uppercase" }}>
+              {member.role}
+            </p>
+            <span className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>✕ close</span>
+          </div>
+
+          <div
+            style={{
+              flex: 1,
+              overflowY: "auto",
+              overflowX: "hidden",
+              paddingRight: "4px",
+              scrollbarWidth: "thin",
+              scrollbarColor: "rgba(255,255,255,0.1) transparent",
+            }}
+          >
+            {member.bio.split("\n\n").map((para, i) => (
+              <p
+                key={i}
+                className="text-xs leading-relaxed"
+                style={{
+                  color: "rgba(255,255,255,0.6)",
+                  lineHeight: "1.85",
+                  marginBottom: i < member.bio.split("\n\n").length - 1 ? "12px" : 0,
+                }}
+              >
+                {para}
+              </p>
+            ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export function About() {
   const ref = useRef<HTMLDivElement>(null);
@@ -60,17 +182,6 @@ export function About() {
     >
       <div ref={ref} className="max-w-6xl mx-auto px-6 md:px-10">
 
-        {/* Label */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-xs font-medium uppercase mb-16"
-          style={{ color: "var(--mist)", letterSpacing: "0.28em" }}
-        >
-          About
-        </motion.p>
-
         {/* Story */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-20" style={{ borderBottom: "1px solid var(--hair)" }}>
           <motion.div
@@ -81,12 +192,7 @@ export function About() {
           >
             <h2
               className="font-semibold"
-              style={{
-                fontSize: "clamp(1.75rem,3vw,2.5rem)",
-                color: "var(--navy)",
-                letterSpacing: "-0.02em",
-                lineHeight: "1.15",
-              }}
+              style={{ fontSize: "clamp(1.75rem,3vw,2.5rem)", color: "var(--navy)", letterSpacing: "-0.02em", lineHeight: "1.15" }}
             >
               Small team.<br />Serious work.
             </h2>
@@ -111,12 +217,8 @@ export function About() {
                 { n: "Global", label: "Reach" },
               ].map(({ n, label }) => (
                 <div key={label} className="flex flex-col gap-0.5">
-                  <span className="font-semibold" style={{ color: "var(--navy)", fontSize: "1.25rem", letterSpacing: "-0.02em" }}>
-                    {n}
-                  </span>
-                  <span className="text-xs" style={{ color: "var(--mist)", letterSpacing: "0.14em", textTransform: "uppercase" }}>
-                    {label}
-                  </span>
+                  <span className="font-semibold" style={{ color: "var(--navy)", fontSize: "1.25rem", letterSpacing: "-0.02em" }}>{n}</span>
+                  <span className="text-xs uppercase" style={{ color: "var(--mist)", letterSpacing: "0.14em" }}>{label}</span>
                 </div>
               ))}
             </div>
@@ -125,57 +227,21 @@ export function About() {
 
         {/* Team */}
         <div className="pt-16">
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="text-xs font-medium uppercase mb-10"
-            style={{ color: "var(--mist)", letterSpacing: "0.28em" }}
+            className="flex items-end justify-between mb-10"
           >
-            The Team
-          </motion.p>
+            <p className="text-xs font-medium uppercase" style={{ color: "var(--mist)", letterSpacing: "0.28em" }}>
+              The Team
+            </p>
+            <p className="text-xs" style={{ color: "var(--hair)" }}>Click a card to read their bio</p>
+          </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {team.map((member, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: 0.2 + i * 0.07 }}
-                className="flex flex-col gap-5 p-6 cursor-default"
-                style={{ background: "#fff", border: "1px solid var(--hair)", transition: "border-color 0.2s ease, box-shadow 0.2s ease" }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(173,138,82,0.4)";
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 20px rgba(12,35,64,0.06)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = "var(--hair)";
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
-                }}
-              >
-                {/* Icon */}
-                <div
-                  className="flex items-center justify-center rounded-full flex-shrink-0"
-                  style={{
-                    width: "56px",
-                    height: "56px",
-                    background: "var(--paper)",
-                    border: "1px solid var(--hair)",
-                  }}
-                >
-                  {member.icon}
-                </div>
-
-                {/* Text */}
-                <div className="flex flex-col gap-1">
-                  <p className="font-semibold text-sm" style={{ color: "var(--navy)", letterSpacing: "-0.01em" }}>
-                    {member.role}
-                  </p>
-                  <p className="text-xs leading-relaxed" style={{ color: "var(--mist)" }}>
-                    {member.discipline}
-                  </p>
-                </div>
-              </motion.div>
+              <FlipCard key={i} member={member} index={i} inView={inView} />
             ))}
           </div>
         </div>
