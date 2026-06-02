@@ -1,10 +1,11 @@
 "use client";
 
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { ParticleCanvas } from "../ParticleCanvas";
 
+// ─── Project data ─────────────────────────────────────────────────────────────
 const projects = [
   {
     n: "01",
@@ -12,7 +13,9 @@ const projects = [
     url: "https://onthegojuice.vercel.app",
     tags: ["Web Development", "Brand Identity"],
     sector: "Health & Wellness · UK Startup",
-    desc: "Storefront and brand identity for a UK cold-pressed juice startup. Subscription-first design built to convert health-conscious visitors into recurring customers, with a bold visual language that reflects the product.",
+    desc: "Storefront and brand identity for a UK cold-pressed juice startup. Subscription-first design built to convert health-conscious visitors into recurring customers.",
+    slides: ["/screenshots/onthegojuice/1.jpg", "/screenshots/onthegojuice/2.jpg", "/screenshots/onthegojuice/3.jpg"],
+    portrait: false,
   },
   {
     n: "02",
@@ -20,7 +23,9 @@ const projects = [
     url: "https://bcusca.org",
     tags: ["Web Development"],
     sector: "Education · University Platform",
-    desc: "Career and community hub for Birmingham City University computing students. Surfaces internship listings, events, and resources that bridge the gap between study and employment — built for students, run by students.",
+    desc: "Career and community hub for Birmingham City University computing students. Surfaces internship listings, events, and resources that bridge study and employment.",
+    slides: ["/screenshots/bcusca/1.jpg", "/screenshots/bcusca/2.jpg", "/screenshots/bcusca/3.jpg"],
+    portrait: false,
   },
   {
     n: "03",
@@ -28,7 +33,9 @@ const projects = [
     url: "https://bridge-final-web-version.vercel.app",
     tags: ["Web Development"],
     sector: "Social Impact · Digital Inclusion",
-    desc: "Digital inclusion platform giving young people access to devices, learning pathways, mentorship, and AI-guided guidance. Built to tackle the digital divide and get underserved communities connected to opportunity.",
+    desc: "Digital inclusion platform giving young people access to devices, learning pathways, mentorship, and AI-guided guidance to tackle the digital divide.",
+    slides: ["/screenshots/bridge/1.jpg", "/screenshots/bridge/2.jpg", "/screenshots/bridge/3.jpg"],
+    portrait: false,
   },
   {
     n: "04",
@@ -36,7 +43,9 @@ const projects = [
     url: "https://umrah-marketplace.vercel.app",
     tags: ["Web Development"],
     sector: "Retail · E-commerce",
-    desc: "Full-service grocery supermarket platform emphasising quality, freshness, and competitive pricing. Clean, conversion-optimised storefront designed to build trust and drive repeat purchases.",
+    desc: "Full-service grocery supermarket platform emphasising quality, freshness, and competitive pricing. Clean, conversion-optimised storefront built to drive repeat purchases.",
+    slides: ["/screenshots/umrah-marketplace/1.jpg", "/screenshots/umrah-marketplace/2.jpg", "/screenshots/umrah-marketplace/3.jpg"],
+    portrait: false,
   },
   {
     n: "05",
@@ -44,7 +53,9 @@ const projects = [
     url: "https://umrah-marketplace-mobile-app.vercel.app",
     tags: ["Mobile Development"],
     sector: "Retail · Mobile App",
-    desc: "Touch-first companion app for the Umrah Marketplace. Rebuilt the entire shopping experience for mobile users — streamlined navigation, faster checkout, and an interface that feels native rather than ported.",
+    desc: "Touch-first companion app for the Umrah Marketplace. Rebuilt the shopping experience for mobile users with streamlined navigation and a native-feeling interface.",
+    slides: ["/screenshots/umrah-mobile/1.jpg", "/screenshots/umrah-mobile/2.jpg", "/screenshots/umrah-mobile/3.jpg"],
+    portrait: true,
   },
   {
     n: "06",
@@ -52,151 +63,221 @@ const projects = [
     url: "https://sizzleandseekh.vercel.app",
     tags: ["Web Development", "Brand Identity"],
     sector: "Food & Beverage · International",
-    desc: "Premium website for a halal-certified Pakistani restaurant in Islamabad, specialising in grilled burgers and BBQ. International client. Designed to capture walk-in footfall and online orders in equal measure.",
+    desc: "Premium website for a halal-certified Pakistani restaurant in Islamabad specialising in grilled burgers and BBQ. Designed to capture walk-in footfall and online orders.",
+    slides: ["/screenshots/sizzleandseekh/1.jpg", "/screenshots/sizzleandseekh/2.jpg", "/screenshots/sizzleandseekh/3.jpg"],
+    portrait: false,
   },
 ];
 
-function ProjectCard({ project, index, inView }: { project: typeof projects[0]; index: number; inView: boolean }) {
-  const [imgError, setImgError] = useState(false);
-  const screenshotUrl = `https://image.thum.io/get/width/1200/crop/675/${project.url}`;
+// ─── Carousel ─────────────────────────────────────────────────────────────────
+function Carousel({ slides, portrait }: { slides: string[]; portrait: boolean }) {
+  const [active, setActive] = useState(0);
+  const [hovered, setHovered] = useState(false);
 
+  const next = useCallback(() => setActive((i) => (i + 1) % slides.length), [slides.length]);
+
+  // Auto-advance — pauses on hover
+  useEffect(() => {
+    if (hovered || slides.length <= 1) return;
+    const t = setInterval(next, 3200);
+    return () => clearInterval(t);
+  }, [hovered, next, slides.length]);
+
+  return (
+    <div
+      className="relative overflow-hidden"
+      style={{
+        aspectRatio: portrait ? "9/16" : "16/9",
+        background: "#050e1a",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Slides — crossfade */}
+      {slides.map((src, i) => (
+        <div
+          key={src}
+          className="absolute inset-0"
+          style={{
+            opacity: i === active ? 1 : 0,
+            transition: "opacity 0.65s ease",
+            zIndex: i === active ? 1 : 0,
+          }}
+        >
+          <Image
+            src={src}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
+            style={{ objectPosition: "top center" }}
+            priority={i === 0}
+          />
+        </div>
+      ))}
+
+      {/* Progress bar */}
+      <div className="absolute bottom-0 left-0 right-0 flex gap-px z-10">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            aria-label={`Slide ${i + 1}`}
+            onClick={() => setActive(i)}
+            className="flex-1 h-0.5 transition-all duration-300"
+            style={{
+              background: i === active
+                ? "#AD8A52"
+                : "rgba(255,255,255,0.2)",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Prev / Next arrows — appear on hover */}
+      {slides.length > 1 && (
+        <>
+          <button
+            aria-label="Previous"
+            onClick={() => setActive((i) => (i - 1 + slides.length) % slides.length)}
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200"
+            style={{
+              background: "rgba(12,35,64,0.7)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              color: "rgba(255,255,255,0.7)",
+              opacity: hovered ? 1 : 0,
+            }}
+          >
+            ‹
+          </button>
+          <button
+            aria-label="Next"
+            onClick={next}
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200"
+            style={{
+              background: "rgba(12,35,64,0.7)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              color: "rgba(255,255,255,0.7)",
+              opacity: hovered ? 1 : 0,
+            }}
+          >
+            ›
+          </button>
+        </>
+      )}
+
+      {/* Slide counter */}
+      <div
+        className="absolute top-3 right-3 z-10 text-xs font-medium tabular-nums px-2 py-0.5 rounded-sm"
+        style={{
+          background: "rgba(12,35,64,0.7)",
+          color: "rgba(255,255,255,0.5)",
+          backdropFilter: "blur(4px)",
+        }}
+      >
+        {active + 1} / {slides.length}
+      </div>
+    </div>
+  );
+}
+
+// ─── Project card ──────────────────────────────────────────────────────────────
+function ProjectCard({ project, index, inView }: { project: typeof projects[0]; index: number; inView: boolean }) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 36 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: index * 0.1 }}
-      className="group relative flex flex-col overflow-hidden"
+      transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: index * 0.09 }}
+      className="group flex flex-col overflow-hidden"
       style={{
         background: "rgba(10,29,53,0.95)",
         border: "1px solid rgba(159,176,190,0.08)",
+        transition: "border-color 0.3s ease",
       }}
+      whileHover={{ borderColor: "rgba(173,138,82,0.25)" } as never}
     >
-      {/* Screenshot */}
-      <a
-        href={project.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="relative block overflow-hidden flex-shrink-0"
-        style={{ aspectRatio: "16/9" }}
-      >
-        {!imgError ? (
-          <Image
-            src={screenshotUrl}
-            alt={`${project.name} website screenshot`}
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover object-top"
-            style={{ transition: "transform 0.6s ease" }}
-            onError={() => setImgError(true)}
-            loading="lazy"
-          />
-        ) : (
-          // Fallback when screenshot fails
-          <div
-            className="absolute inset-0 flex items-center justify-center"
-            style={{ background: "linear-gradient(135deg, rgba(12,35,64,0.9), rgba(5,14,26,0.95))" }}
-          >
-            <span className="font-semibold text-white/20" style={{ fontSize: "2rem", letterSpacing: "-0.03em" }}>
-              {project.name}
-            </span>
-          </div>
-        )}
+      {/* Carousel */}
+      <div className="relative">
+        <Carousel slides={project.slides} portrait={project.portrait} />
 
-        {/* Hover overlay */}
-        <div
-          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100"
+        {/* "View Live" overlay on screenshot hover */}
+        <a
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto"
           style={{
-            background: "rgba(12,35,64,0.88)",
+            background: "rgba(12,35,64,0.7)",
             transition: "opacity 0.25s ease",
+            backdropFilter: "blur(2px)",
           }}
         >
           <span
-            className="font-medium"
             style={{
               color: "#C2A065",
-              fontSize: "0.9rem",
-              border: "1px solid rgba(173,138,82,0.4)",
-              padding: "10px 24px",
+              fontSize: "0.85rem",
+              fontWeight: 600,
+              border: "1px solid rgba(173,138,82,0.45)",
+              padding: "9px 22px",
               letterSpacing: "0.02em",
             }}
           >
             View Live →
           </span>
-        </div>
-
-        {/* Gold top border on hover */}
-        <div
-          className="absolute top-0 left-0 right-0 h-0.5 origin-left scale-x-0 group-hover:scale-x-100"
-          style={{ background: "linear-gradient(90deg, #AD8A52, #C2A065, transparent)", transition: "transform 0.4s ease" }}
-        />
-      </a>
+        </a>
+      </div>
 
       {/* Card body */}
-      <div className="flex flex-col flex-1 p-6 md:p-7 gap-4">
-        {/* Meta row */}
+      <div className="flex flex-col flex-1 p-6 gap-4">
+        {/* Tags + number */}
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="flex flex-wrap gap-2">
             {project.tags.map((tag) => (
               <span
                 key={tag}
                 className="text-xs font-medium px-2.5 py-1"
-                style={{ color: "#AD8A52", border: "1px solid rgba(173,138,82,0.22)", letterSpacing: "0.02em" }}
+                style={{ color: "#AD8A52", border: "1px solid rgba(173,138,82,0.22)" }}
               >
                 {tag}
               </span>
             ))}
           </div>
-          <span className="text-xs tabular-nums" style={{ color: "rgba(255,255,255,0.18)" }}>
-            {project.n}
-          </span>
+          <span className="text-xs tabular-nums" style={{ color: "rgba(255,255,255,0.15)" }}>{project.n}</span>
         </div>
 
-        {/* Title */}
+        {/* Name + sector */}
         <div>
           <h3
             className="font-semibold text-white"
-            style={{ fontSize: "clamp(1.05rem,1.5vw,1.25rem)", letterSpacing: "-0.015em", lineHeight: "1.3", marginBottom: "4px" }}
+            style={{ fontSize: "clamp(1rem,1.4vw,1.2rem)", letterSpacing: "-0.015em", lineHeight: "1.3", marginBottom: "3px" }}
           >
             {project.name}
           </h3>
-          <p style={{ color: "rgba(255,255,255,0.28)", fontSize: "11px", letterSpacing: "0.02em" }}>
-            {project.sector}
-          </p>
+          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "11px" }}>{project.sector}</p>
         </div>
 
         {/* Description */}
-        <p
-          className="text-sm flex-1"
-          style={{ color: "rgba(255,255,255,0.45)", lineHeight: "1.78" }}
-        >
+        <p className="text-sm flex-1" style={{ color: "rgba(255,255,255,0.45)", lineHeight: "1.78" }}>
           {project.desc}
         </p>
 
-        {/* Footer link */}
+        {/* CTA */}
         <a
           href={project.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-sm font-medium mt-2 group/link"
-          style={{ color: "#AD8A52", transition: "color 0.2s ease" }}
+          className="inline-flex items-center gap-1.5 text-sm font-medium"
+          style={{ color: "#AD8A52", transition: "color 0.2s ease", width: "fit-content" }}
           onMouseEnter={(e) => { e.currentTarget.style.color = "#C2A065"; }}
           onMouseLeave={(e) => { e.currentTarget.style.color = "#AD8A52"; }}
         >
-          View Live
-          <motion.span
-            className="inline-block"
-            initial={{ x: 0 }}
-            whileHover={{ x: 4 }}
-            transition={{ duration: 0.2 }}
-          >
-            →
-          </motion.span>
+          View Live →
         </a>
       </div>
     </motion.article>
   );
 }
 
+// ─── Section ──────────────────────────────────────────────────────────────────
 export function Portfolio() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-6% 0px" });
@@ -214,15 +295,9 @@ export function Portfolio() {
     >
       <ParticleCanvas count={28} />
       <div className="grid-overlay" style={{ opacity: 0.1 }} />
-
       <motion.div
         className="absolute pointer-events-none"
-        style={{
-          bottom: "-5%", left: "-10%",
-          width: "500px", height: "500px",
-          background: "radial-gradient(circle, rgba(173,138,82,0.05), transparent 65%)",
-          y: bgY,
-        }}
+        style={{ bottom: "-5%", left: "-10%", width: "500px", height: "500px", background: "radial-gradient(circle, rgba(173,138,82,0.05), transparent 65%)", y: bgY }}
       />
 
       <div ref={ref} className="relative max-w-6xl mx-auto px-6 md:px-10">
@@ -248,20 +323,17 @@ export function Portfolio() {
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.15 }}
             >
-              A cross-section of recent projects. Brand, web, and digital products delivered end-to-end.
+              A cross-section of recent projects across brand, web, and digital product.
             </motion.p>
           </div>
 
           <motion.div
-            className="flex items-center gap-6 md:gap-8 flex-shrink-0"
+            className="flex items-center gap-8 flex-shrink-0"
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {[
-              { n: "6", label: "shown here" },
-              { n: "100+", label: "delivered" },
-            ].map(({ n, label }) => (
+            {[{ n: "6", label: "shown here" }, { n: "100+", label: "delivered" }].map(({ n, label }) => (
               <div key={label} className="flex flex-col gap-0.5">
                 <span className="font-semibold text-white" style={{ fontSize: "1.4rem", letterSpacing: "-0.025em" }}>{n}</span>
                 <span style={{ color: "rgba(255,255,255,0.28)", fontSize: "11px" }}>{label}</span>
@@ -270,17 +342,16 @@ export function Portfolio() {
           </motion.div>
         </div>
 
-        {/* Grid — 2 cols on md+, 1 col on mobile */}
+        {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {projects.map((p, i) => (
             <ProjectCard key={p.n} project={p} index={i} inView={inView} />
           ))}
         </div>
 
-        {/* Footer note */}
         <motion.p
           className="text-sm text-center mt-14"
-          style={{ color: "rgba(255,255,255,0.2)" }}
+          style={{ color: "rgba(255,255,255,0.18)" }}
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}

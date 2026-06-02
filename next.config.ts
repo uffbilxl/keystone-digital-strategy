@@ -1,11 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      { hostname: "image.thum.io" },
-    ],
-  },
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
