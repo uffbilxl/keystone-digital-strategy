@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { AnimatedBackground } from "../AnimatedBackground";
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0 },
@@ -15,9 +16,10 @@ export function Hero() {
 
   return (
     <section
-      className="relative min-h-screen flex flex-col justify-between"
+      className="relative min-h-screen flex flex-col justify-between overflow-hidden"
       style={{ background: "#0C2340" }}
     >
+      <AnimatedBackground gold />
       <div className="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full px-6 md:px-10 pt-32 pb-16">
 
         {/* Label */}
