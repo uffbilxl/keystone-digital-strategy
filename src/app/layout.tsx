@@ -10,7 +10,7 @@ const schibsted = Schibsted_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://keystonedigitalstrategy.co.uk"),
+  metadataBase: new URL("https://www.keystonedigitalstrategy.co.uk"),
   title: "Keystone Digital Strategy - Leading tech firm",
   description:
     "Brand identity, web development, and cybersecurity testing — delivered by specialists.",
