@@ -250,18 +250,15 @@ function ProjectCard({ project, index, inView }: { project: typeof projects[0]; 
           <Carousel slides={project.slides} />
         )}
 
-        {/* View Live overlay */}
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto"
-          style={{ background: "rgba(12,35,64,0.7)", transition: "opacity 0.25s ease", backdropFilter: "blur(2px)" }}
+        {/* Hover dim — visual only, never intercepts pointer events */}
+        <div
+          className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none"
+          style={{ background: "rgba(12,35,64,0.5)", transition: "opacity 0.25s ease" }}
         >
-          <span style={{ color: "#C2A065", fontSize: "0.85rem", fontWeight: 600, border: "1px solid rgba(173,138,82,0.45)", padding: "9px 22px" }}>
+          <span style={{ color: "#C2A065", fontSize: "0.85rem", fontWeight: 600, border: "1px solid rgba(173,138,82,0.45)", padding: "9px 22px", pointerEvents: "none" }}>
             View Live →
           </span>
-        </a>
+        </div>
       </div>
 
       {/* Body */}
