@@ -27,7 +27,7 @@ function EditorialRow({
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: index * 0.09 }}
-      style={{ borderBottom: "1px solid var(--hair)" }}
+      style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}
     >
       <Link
         href={item.href}
@@ -37,7 +37,7 @@ function EditorialRow({
         {/* Number */}
         <span
           className="editorial-num flex-shrink-0 font-medium tabular-nums"
-          style={{ color: "var(--hair)", fontSize: "0.75rem", width: "28px", transition: "color 0.2s ease" }}
+          style={{ color: "rgba(255,255,255,0.18)", fontSize: "0.75rem", width: "28px", transition: "color 0.2s ease" }}
         >
           {item.n}
         </span>
@@ -46,7 +46,7 @@ function EditorialRow({
         <h3
           className="editorial-title font-semibold flex-shrink-0"
           style={{
-            color: "var(--navy)",
+            color: "#fff",
             fontSize: "clamp(1rem,1.4vw,1.2rem)",
             letterSpacing: "-0.01em",
             minWidth: "160px",
@@ -56,13 +56,13 @@ function EditorialRow({
           {item.label}
         </h3>
 
-        {/* Expanding line separator */}
-        <div className="editorial-line flex-1 hidden md:block" style={{ height: "1px", background: "var(--hair)", transition: "background 0.3s ease" }} />
+        {/* Separator line */}
+        <div className="editorial-line flex-1 hidden md:block" style={{ height: "1px", background: "rgba(255,255,255,0.1)", transition: "background 0.3s ease" }} />
 
         {/* Description */}
         <p
           className="text-sm hidden md:block"
-          style={{ color: "var(--mist)", maxWidth: "300px", lineHeight: "1.65" }}
+          style={{ color: "rgba(255,255,255,0.35)", maxWidth: "300px", lineHeight: "1.65" }}
         >
           {item.desc}
         </p>
@@ -99,22 +99,22 @@ export default function Home() {
       <section
         ref={sectionRef}
         className="relative overflow-hidden"
-        style={{ background: "var(--paper)", borderTop: "1px solid var(--hair)" }}
+        style={{ background: "#0C2340", borderTop: "1px solid rgba(159,176,190,0.08)" }}
       >
         <motion.div
           className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at 60% 50%, rgba(12,35,64,0.03), transparent 60%)", y: bgY }}
+          style={{ background: "radial-gradient(ellipse at 60% 50%, rgba(173,138,82,0.04), transparent 60%)", y: bgY }}
         />
 
         <div ref={exploreRef} className="max-w-6xl mx-auto px-6 md:px-10 relative">
           {/* Section heading */}
           <motion.div
-            style={{ borderBottom: "1px solid var(--hair)", paddingTop: "4rem", paddingBottom: "1.5rem" }}
+            style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", paddingTop: "4rem", paddingBottom: "1.5rem" }}
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.5 }}
           >
-            <p style={{ color: "var(--mist)", fontSize: "0.8rem", fontWeight: 500 }}>Explore</p>
+            <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.8rem", fontWeight: 500 }}>Explore</p>
           </motion.div>
 
           {/* Rows */}
