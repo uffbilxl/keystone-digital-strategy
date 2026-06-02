@@ -213,6 +213,13 @@ button:active, a:active {
   box-shadow: 0 0 0 3px rgba(173,138,82,0.2), 0 0 24px rgba(173,138,82,0.08);
 }
 
+/* Editorial row hover */
+.editorial-row:hover .editorial-num   { color: #AD8A52 !important; }
+.editorial-row:hover .editorial-title { color: #AD8A52 !important; }
+.editorial-row:hover .editorial-line  { background: rgba(173,138,82,0.3) !important; }
+.editorial-row:hover .editorial-arrow { transform: translateX(6px); }
+.editorial-arrow { transition: transform 0.2s ease; }
+
 /* Cinematic scan line overlay */
 .scan-overlay::before {
   content: "";

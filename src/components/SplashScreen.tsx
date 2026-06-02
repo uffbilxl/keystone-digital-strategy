@@ -2,119 +2,165 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LogoMark } from "./Logo";
 
 interface SplashScreenProps {
   onComplete: () => void;
 }
 
+// The arch animation itself — identical brand shape, drawn with pathLength
+function SplashArch() {
+  return (
+    <div className="relative flex items-center justify-center" style={{ width: 220, height: 260 }}>
+      {/* Soft bloom behind arch */}
+      <motion.div
+        className="absolute"
+        style={{
+          inset: "10%",
+          background: "radial-gradient(ellipse at 50% 50%, rgba(173,138,82,0.14), transparent 65%)",
+          filter: "blur(32px)",
+        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1, 0.7] }}
+        transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
+      />
+
+      <svg
+        viewBox="0 0 100 100"
+        width="220"
+        height="260"
+        fill="none"
+        style={{ overflow: "visible" }}
+      >
+        {/* Arch body */}
+        <motion.path
+          d="M 12,86 L 12,48 A 38,38 0 0 1 88,48 L 88,86 L 72,86 L 72,48 A 22,22 0 0 0 28,48 L 28,86 Z"
+          fill="rgba(173,138,82,0.04)"
+          stroke="rgba(173,138,82,0.35)"
+          strokeWidth="0.6"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 1.6, delay: 0.3, ease: "easeInOut" }}
+        />
+
+        {/* Foundation bar */}
+        <motion.rect
+          x="6.5" y="85.6" width="87" height="3" rx="0.6"
+          fill="rgba(173,138,82,0.25)"
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          style={{ transformOrigin: "50px 87px" }}
+          transition={{ duration: 0.7, delay: 1.7, ease: [0.16, 1, 0.3, 1] }}
+        />
+
+        {/* Framework lines */}
+        {([
+          [61.66, 29.34, 70.14, 15.77],
+          [69.42, 37.67, 83.55, 30.16],
+          [38.34, 29.34, 29.86, 15.77],
+          [30.58, 37.67, 16.45, 30.16],
+        ] as [number, number, number, number][]).map((ln, i) => (
+          <motion.line
+            key={i}
+            x1={ln[0]} y1={ln[1]} x2={ln[2]} y2={ln[3]}
+            stroke="rgba(173,138,82,0.4)"
+            strokeWidth="0.8"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 0.45, delay: 1.9 + i * 0.1 }}
+          />
+        ))}
+
+        {/* Keystone wedge — drops in last */}
+        <motion.polygon
+          points="41.5,8.5 58.5,8.5 55.8,27.5 44.2,27.5"
+          fill="#AD8A52"
+          stroke="rgba(255,255,255,0.15)"
+          strokeWidth="1"
+          strokeLinejoin="round"
+          initial={{ opacity: 0, y: -12, scale: 0.7 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          style={{ transformOrigin: "50px 18px" }}
+          transition={{ duration: 0.6, delay: 2.35, ease: [0.16, 1, 0.3, 1] }}
+        />
+
+        {/* Pulse ripple on completion */}
+        <motion.circle
+          cx="50" cy="47" r="38"
+          fill="none"
+          stroke="rgba(173,138,82,0.2)"
+          strokeWidth="0.5"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: [0.9, 1.08], opacity: [0, 0.6, 0] }}
+          style={{ transformOrigin: "50px 47px" }}
+          transition={{ duration: 0.9, delay: 2.85, ease: "easeOut" }}
+        />
+      </svg>
+    </div>
+  );
+}
+
 export function SplashScreen({ onComplete }: SplashScreenProps) {
-  const [progress, setProgress] = useState(0);
-  const [splitting, setSplitting] = useState(false);
+  const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
-    // Fill the loading bar over ~1.6s
-    const start = performance.now();
-    const duration = 1600;
+    // Arch animation takes ~3s to complete (path draw + wedge + ripple)
+    // Exit at 3.5s — user has seen the full reveal
+    const exitTimer = setTimeout(() => {
+      setExiting(true);
+      setTimeout(onComplete, 700);
+    }, 3500);
 
-    const tick = (now: number) => {
-      const elapsed = now - start;
-      const p = Math.min(elapsed / duration, 1);
-      setProgress(p);
-
-      if (p < 1) {
-        requestAnimationFrame(tick);
-      } else {
-        // Short pause then split
-        setTimeout(() => {
-          setSplitting(true);
-          setTimeout(onComplete, 700);
-        }, 200);
-      }
-    };
-
-    requestAnimationFrame(tick);
+    return () => clearTimeout(exitTimer);
   }, [onComplete]);
 
   return (
     <AnimatePresence>
-      {!splitting ? (
-        // Full-screen splash
+      {!exiting ? (
         <motion.div
           key="splash"
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.15 }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
           style={{ background: "#0C2340" }}
         >
-          {/* Grid overlay */}
-          <div className="grid-overlay" style={{ opacity: 0.3 }} />
+          {/* Subtle grid */}
+          <div className="grid-overlay" style={{ opacity: 0.1 }} />
 
-          {/* Gold radial glow */}
-          <div
+          {/* Ambient glow */}
+          <motion.div
             className="absolute pointer-events-none"
             style={{
-              top: "20%",
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "500px",
-              height: "500px",
-              background: "radial-gradient(circle, rgba(173,138,82,0.1), transparent 65%)",
+              top: "15%", left: "50%", transform: "translateX(-50%)",
+              width: "500px", height: "500px",
+              background: "radial-gradient(circle, rgba(173,138,82,0.08), transparent 65%)",
             }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5 }}
           />
 
-          <div className="relative flex flex-col items-center gap-10">
-            {/* Logo mark */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-            >
-              <LogoMark size={96} archColor="#FFFFFF" keystoneColor="#C2A065" />
-            </motion.div>
+          <div className="flex flex-col items-center gap-8">
+            {/* Arch draw — the entry ritual */}
+            <SplashArch />
 
-            {/* Wordmark */}
+            {/* Wordmark fades in after arch is mostly drawn */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              className="flex flex-col items-center gap-1.5"
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1], delay: 0.3 }}
-              className="flex flex-col items-center gap-1"
+              transition={{ duration: 0.6, delay: 2.0, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span
-                className="font-semibold text-white"
-                style={{ fontSize: "22px", letterSpacing: "-0.01em" }}
-              >
+              <span className="font-semibold text-white" style={{ fontSize: "20px", letterSpacing: "-0.01em" }}>
                 Keystone
               </span>
-              <span
-                className="font-medium uppercase text-white/50"
-                style={{ fontSize: "9px", letterSpacing: "0.32em" }}
-              >
+              <span className="font-medium text-white/40" style={{ fontSize: "10px", letterSpacing: "0.04em" }}>
                 Digital Strategy
               </span>
-            </motion.div>
-
-            {/* Loading bar */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.4 }}
-              className="relative overflow-hidden"
-              style={{ width: "160px", height: "1px", background: "rgba(255,255,255,0.1)" }}
-            >
-              <div
-                className="absolute inset-y-0 left-0 transition-none"
-                style={{
-                  width: `${progress * 100}%`,
-                  background: "linear-gradient(90deg, #AD8A52, #C2A065)",
-                  transition: "width 0.05s linear",
-                }}
-              />
             </motion.div>
           </div>
         </motion.div>
       ) : (
-        // Split panels
+        /* Split exit — panels slide away */
         <div key="split" className="fixed inset-0 z-[9999] pointer-events-none">
           <motion.div
             initial={{ y: 0 }}

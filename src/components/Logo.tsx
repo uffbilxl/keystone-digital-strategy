@@ -112,8 +112,8 @@ export function Logo({ variant = "dark", className = "", showTagline = true }: L
         </span>
         {showTagline && (
           <span
-            className="font-medium uppercase tracking-widest"
-            style={{ color: tagColor, fontSize: "8.5px", letterSpacing: "0.22em", marginTop: "2px" }}
+            className="font-medium"
+            style={{ color: tagColor, fontSize: "9px", letterSpacing: "0.04em", marginTop: "2px" }}
           >
             Digital Strategy
           </span>

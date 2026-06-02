@@ -25,7 +25,6 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   const isActive = (href: string) =>
@@ -41,7 +40,7 @@ export function Navigation() {
         style={{
           background: scrolled ? "rgba(12,35,64,0.96)" : "transparent",
           backdropFilter: scrolled ? "blur(12px)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(159,176,190,0.12)" : "1px solid transparent",
+          borderBottom: scrolled ? "1px solid rgba(159,176,190,0.1)" : "1px solid transparent",
         }}
       >
         <div className="max-w-6xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
@@ -50,36 +49,33 @@ export function Navigation() {
             <Logo variant="light" />
           </Link>
 
-          {/* Desktop links */}
-          <nav className="hidden md:flex items-center gap-8">
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-7">
             {links.map((link) => {
               const active = isActive(link.href);
               return (
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="relative text-xs font-medium uppercase group"
+                  className="relative text-sm font-medium group"
                   style={{
-                    color: active ? "#fff" : "rgba(255,255,255,0.55)",
-                    letterSpacing: "0.18em",
+                    color: active ? "#fff" : "rgba(255,255,255,0.5)",
                     transition: "color 0.2s ease",
                   }}
                   onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = active ? "#fff" : "rgba(255,255,255,0.55)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = active ? "#fff" : "rgba(255,255,255,0.5)"; }}
                 >
                   {link.label}
+                  {/* Active underline */}
                   <span
                     className="absolute -bottom-0.5 left-0 h-px"
-                    style={{
-                      width: active ? "100%" : "0",
-                      background: "#AD8A52",
-                      transition: "width 0.25s ease",
-                    }}
+                    style={{ width: active ? "100%" : "0", background: "#AD8A52", transition: "width 0.25s ease" }}
                   />
+                  {/* Hover underline */}
                   {!active && (
                     <span
                       className="absolute -bottom-0.5 left-0 h-px w-0 group-hover:w-full"
-                      style={{ background: "rgba(173,138,82,0.5)", transition: "width 0.25s ease" }}
+                      style={{ background: "rgba(173,138,82,0.4)", transition: "width 0.25s ease" }}
                     />
                   )}
                 </Link>
@@ -87,17 +83,16 @@ export function Navigation() {
             })}
           </nav>
 
-          {/* CTA */}
+          {/* CTA + hamburger */}
           <div className="flex items-center gap-4">
             <Link
               href="/contact"
-              className="contact-btn hidden md:inline-flex items-center px-4 py-2 text-xs font-semibold uppercase"
-              style={{ letterSpacing: "0.18em", color: "#C2A065", borderRadius: "3px" }}
+              className="contact-btn hidden md:inline-flex items-center px-4 py-2 text-sm font-medium"
+              style={{ color: "#C2A065", borderRadius: "3px" }}
             >
               Contact Us
             </Link>
 
-            {/* Mobile hamburger */}
             <button
               className="md:hidden flex flex-col gap-1.5 p-2"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -124,7 +119,7 @@ export function Navigation() {
           pointerEvents: menuOpen ? "auto" : "none",
           background: "rgba(10,30,56,0.98)",
           backdropFilter: "blur(16px)",
-          borderBottom: "1px solid rgba(159,176,190,0.12)",
+          borderBottom: "1px solid rgba(159,176,190,0.1)",
         }}
       >
         <div className="px-6 py-6 flex flex-col gap-5">
@@ -132,22 +127,18 @@ export function Navigation() {
             <Link
               key={link.label}
               href={link.href}
-              className="text-sm font-medium uppercase"
-              style={{
-                color: isActive(link.href) ? "#fff" : "rgba(255,255,255,0.65)",
-                letterSpacing: "0.22em",
-              }}
+              className="text-sm font-medium"
+              style={{ color: isActive(link.href) ? "#fff" : "rgba(255,255,255,0.6)" }}
             >
               {link.label}
             </Link>
           ))}
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center px-4 py-2.5 text-xs font-semibold uppercase mt-2"
+            className="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium mt-2"
             style={{
-              letterSpacing: "0.18em",
-              background: "rgba(173,138,82,0.15)",
-              border: "1px solid rgba(173,138,82,0.4)",
+              background: "rgba(173,138,82,0.12)",
+              border: "1px solid rgba(173,138,82,0.35)",
               color: "#C2A065",
             }}
           >
