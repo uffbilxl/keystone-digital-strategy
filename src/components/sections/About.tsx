@@ -281,7 +281,6 @@ export function About() {
             <p className="text-xs font-medium uppercase" style={{ color: "var(--mist)", letterSpacing: "0.28em" }}>
               The Team
             </p>
-            <p className="text-xs" style={{ color: "var(--hair)" }}>Click a card to read their bio</p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
