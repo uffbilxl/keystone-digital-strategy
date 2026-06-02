@@ -1,27 +1,24 @@
 "use client";
 
+import Link from "next/link";
 import { Logo } from "./Logo";
-
-function scrollTo(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-}
 
 const sections = [
   {
     heading: "Services",
     items: [
-      { label: "Brand Identity", action: () => scrollTo("services") },
-      { label: "Social Media Branding", action: () => scrollTo("services") },
-      { label: "Web Development", action: () => scrollTo("services") },
-      { label: "Cybersecurity Testing", action: () => scrollTo("services") },
+      { label: "Brand Identity", href: "/services" },
+      { label: "Social Media Branding", href: "/services" },
+      { label: "Web Development", href: "/services" },
+      { label: "Cybersecurity Testing", href: "/services" },
     ],
   },
   {
     heading: "Company",
     items: [
-      { label: "About Us", action: () => scrollTo("about") },
-      { label: "Our Work", action: () => scrollTo("work") },
-      { label: "Contact Us", action: () => scrollTo("contact") },
+      { label: "About Us", href: "/about" },
+      { label: "Our Work", href: "/work" },
+      { label: "Contact Us", href: "/contact" },
     ],
   },
 ];
@@ -34,21 +31,21 @@ export function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Logo variant="light" className="mb-6" />
+            <Link href="/">
+              <Logo variant="light" className="mb-6" />
+            </Link>
             <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.38)", maxWidth: "280px", lineHeight: "1.75" }}>
               Brand identity, web development, and cybersecurity testing. Delivered by specialists.
             </p>
-            <div className="flex items-center gap-4 mt-6">
-              <a
-                href="mailto:contact@keystonedigitalstrategy.co.uk"
-                className="text-xs transition-colors duration-200"
-                style={{ color: "rgba(255,255,255,0.35)", letterSpacing: "0.04em" }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#C2A065")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
-              >
-                contact@keystonedigitalstrategy.co.uk
-              </a>
-            </div>
+            <a
+              href="mailto:contact@keystonedigitalstrategy.co.uk"
+              className="inline-block mt-5 text-xs"
+              style={{ color: "rgba(255,255,255,0.32)", letterSpacing: "0.04em" }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "#C2A065"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.32)"; }}
+            >
+              contact@keystonedigitalstrategy.co.uk
+            </a>
           </div>
 
           {/* Links */}
@@ -63,15 +60,15 @@ export function Footer() {
               <ul className="flex flex-col gap-3">
                 {section.items.map((item) => (
                   <li key={item.label}>
-                    <button
-                      onClick={item.action}
-                      className="text-sm text-left transition-colors duration-200"
-                      style={{ color: "rgba(255,255,255,0.48)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.82)")}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.48)")}
+                    <Link
+                      href={item.href}
+                      className="text-sm"
+                      style={{ color: "rgba(255,255,255,0.45)" }}
+                      onMouseEnter={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.85)"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.45)"; }}
                     >
                       {item.label}
-                    </button>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -84,10 +81,10 @@ export function Footer() {
           className="mt-16 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
           style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
         >
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.25)", letterSpacing: "0.04em" }}>
+          <p className="text-xs" style={{ color: "rgba(255,255,255,0.22)", letterSpacing: "0.04em" }}>
             © {new Date().getFullYear()} Keystone Digital Strategy. All rights reserved.
           </p>
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.25)", letterSpacing: "0.04em" }}>
+          <p className="text-xs" style={{ color: "rgba(255,255,255,0.22)", letterSpacing: "0.04em" }}>
             Worldwide
           </p>
         </div>
