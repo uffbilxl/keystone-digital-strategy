@@ -143,27 +143,6 @@ function FlipCard({ member, index, inView }: { member: TeamMember; index: number
             justifyContent: "space-between",
           }}
         >
-          {/* Icons row */}
-          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-            {member.icons.map((Icon, i) => (
-              <div
-                key={i}
-                className="icon-circle"
-                style={{
-                  borderRadius: "50%",
-                  background: "var(--paper)",
-                  border: "1px solid var(--hair)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "#0C2340",
-                }}
-              >
-                <Icon size={24} />
-              </div>
-            ))}
-          </div>
-
           <div>
             <p className="font-semibold mb-2" style={{ color: "var(--navy)", fontSize: "1.15rem", letterSpacing: "-0.015em" }}>
               {member.role}
@@ -286,16 +265,7 @@ export function About() {
 
         {/* Team */}
         <div className="pt-16">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="flex items-end justify-between mb-10"
-          >
-            <p className="text-xs font-medium uppercase" style={{ color: "var(--mist)", letterSpacing: "0.28em" }}>
-              The Team
-            </p>
-          </motion.div>
+          <div className="mb-10" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {team.map((member, i) => (
