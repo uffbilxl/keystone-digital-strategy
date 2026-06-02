@@ -116,16 +116,6 @@ export function Contact() {
                   ),
                 },
                 {
-                  label: "Based In",
-                  value: "Worldwide",
-                  icon: (
-                    <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                      <path d="M10 18s-7-5.686-7-11a7 7 0 1 1 14 0c0 5.314-7 11-7 11z" />
-                    </svg>
-                  ),
-                },
-                {
                   label: "Serving",
                   value: "Clients Worldwide",
                   icon: (

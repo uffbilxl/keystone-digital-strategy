@@ -4,10 +4,10 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const team = [
-  { role: "Full Stack Developer", discipline: "Computer Science with AI" },
-  { role: "Full Stack Developer", discipline: "Computer Science with AI" },
-  { role: "Penetration Tester", discipline: "Cyber Security Graduate" },
-  { role: "Security Analyst", discipline: "Cyber Security Graduate" },
+  { role: "Full Stack Developer", discipline: "Computer Science with AI", icon: "code" },
+  { role: "Full Stack Developer", discipline: "Computer Science with AI", icon: "code" },
+  { role: "Penetration Tester", discipline: "Cyber Security Graduate", icon: "shield" },
+  { role: "Security Analyst", discipline: "Cyber Security Graduate", icon: "shield" },
 ];
 
 export function About() {
@@ -97,34 +97,40 @@ export function About() {
             The Team
           </motion.p>
 
-          <div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {team.map((member, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0 }}
-                animate={inView ? { opacity: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.2 + i * 0.06 }}
-                className="grid grid-cols-12 items-center py-6"
-                style={{ borderTop: "1px solid var(--hair)" }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: 0.2 + i * 0.07 }}
+                className="flex flex-col gap-4 p-6"
+                style={{ background: "#fff", border: "1px solid var(--hair)" }}
               >
-                <div className="col-span-1">
-                  <span className="text-xs" style={{ color: "var(--hair)", letterSpacing: "0.1em" }}>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+                <div
+                  className="flex items-center justify-center"
+                  style={{ width: "48px", height: "48px", background: "var(--navy)", border: "1px solid rgba(159,176,190,0.1)" }}
+                >
+                  {member.icon === "shield" ? (
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="1.5">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="1.5">
+                      <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
+                    </svg>
+                  )}
                 </div>
-                <div className="col-span-12 md:col-span-5">
-                  <p className="font-medium" style={{ color: "var(--navy)", fontSize: "0.95rem" }}>
+                <div>
+                  <p className="text-sm font-semibold" style={{ color: "var(--navy)", letterSpacing: "-0.01em" }}>
                     {member.role}
                   </p>
-                </div>
-                <div className="col-span-12 md:col-span-6">
-                  <p className="text-sm" style={{ color: "var(--mist)" }}>
+                  <p className="text-xs mt-1" style={{ color: "var(--mist)" }}>
                     {member.discipline}
                   </p>
                 </div>
               </motion.div>
             ))}
-            <div style={{ borderTop: "1px solid var(--hair)" }} />
           </div>
         </div>
       </div>

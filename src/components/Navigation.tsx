@@ -81,20 +81,11 @@ export function Navigation() {
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, "#contact")}
-              className="hidden md:inline-flex items-center px-4 py-2 text-xs font-semibold uppercase tracking-widest rounded transition-all duration-200"
+              className="contact-btn hidden md:inline-flex items-center px-4 py-2 text-xs font-semibold uppercase"
               style={{
                 letterSpacing: "0.18em",
-                background: "rgba(173,138,82,0.15)",
-                border: "1px solid rgba(173,138,82,0.4)",
                 color: "#C2A065",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(173,138,82,0.28)";
-                e.currentTarget.style.borderColor = "rgba(173,138,82,0.7)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(173,138,82,0.15)";
-                e.currentTarget.style.borderColor = "rgba(173,138,82,0.4)";
+                borderRadius: "3px",
               }}
             >
               Contact Us
