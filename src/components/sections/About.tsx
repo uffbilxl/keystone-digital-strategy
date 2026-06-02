@@ -250,7 +250,7 @@ export function About() {
             className="md:col-span-7 flex flex-col gap-5"
           >
             <p className="text-sm leading-relaxed" style={{ color: "var(--steel)", lineHeight: "1.85" }}>
-              Keystone Digital Strategy is a boutique digital consultancy. We are four specialists working together to deliver brand, web, and security services to clients worldwide.
+              Keystone Digital Strategy is a digital consultancy. We are four specialists working together to deliver brand, web, and security services to clients worldwide.
             </p>
             <p className="text-sm leading-relaxed" style={{ color: "var(--steel)", lineHeight: "1.85" }}>
               Our work speaks for itself: 100+ successful projects across 3 years, delivered for clients across multiple industries and continents. Every engagement is senior-led.
