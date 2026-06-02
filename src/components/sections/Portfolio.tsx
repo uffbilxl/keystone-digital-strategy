@@ -67,6 +67,16 @@ const projects = [
     slides: ["/screenshots/sizzleandseekh/1.jpg", "/screenshots/sizzleandseekh/2.jpg", "/screenshots/sizzleandseekh/3.jpg"],
     strip: false,
   },
+  {
+    n: "07",
+    name: "BCU Law & Debating Society",
+    url: "https://bculawsociety.com",
+    tags: ["Web Development", "Brand Identity", "Security Tested"],
+    sector: "Education · Student Society",
+    desc: "Platform for Birmingham City University's Law & Debating Society. Built to support mock trials, networking events, and career development resources for aspiring legal professionals.",
+    slides: ["/screenshots/bculawsociety/1.jpg", "/screenshots/bculawsociety/2.jpg", "/screenshots/bculawsociety/3.jpg"],
+    strip: false,
+  },
 ];
 
 // ─── Phone strip (mobile project) ─────────────────────────────────────────────
@@ -345,7 +355,7 @@ export function Portfolio() {
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {[{ n: "6", label: "shown here" }, { n: "100+", label: "delivered" }].map(({ n, label }) => (
+            {[{ n: "7", label: "shown here" }, { n: "100+", label: "delivered" }].map(({ n, label }) => (
               <div key={label} className="flex flex-col gap-0.5">
                 <span className="font-semibold text-white" style={{ fontSize: "1.4rem", letterSpacing: "-0.025em" }}>{n}</span>
                 <span style={{ color: "rgba(255,255,255,0.28)", fontSize: "11px" }}>{label}</span>
