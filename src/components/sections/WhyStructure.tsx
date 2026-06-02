@@ -258,43 +258,17 @@ export function WhyStructure() {
       <div ref={ref} className="max-w-6xl mx-auto px-6 md:px-10 relative">
 
         {/* Header */}
-        <div className="mb-14 md:mb-18 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <div>
-            <motion.div
-              className="flex items-center gap-3 mb-5"
-              initial={{ opacity: 0, x: -16 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        <div className="mb-14 md:mb-20 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div style={{ overflow: "hidden" }}>
+            <motion.h2
+              className="font-semibold text-white"
+              style={{ fontSize: "clamp(1.9rem,3.5vw,2.8rem)", letterSpacing: "-0.025em", lineHeight: "1.1" }}
+              initial={{ y: "100%" }}
+              animate={inView ? { y: "0%" } : {}}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
             >
-              <motion.div
-                style={{ height: "1px", background: "rgba(173,138,82,0.5)" }}
-                initial={{ width: 0 }}
-                animate={inView ? { width: 24 } : {}}
-                transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              />
-              <p
-                className="text-xs font-medium uppercase"
-                style={{ color: "#AD8A52", letterSpacing: "0.3em" }}
-              >
-                What We Do
-              </p>
-            </motion.div>
-
-            <div style={{ overflow: "hidden" }}>
-              <motion.h2
-                className="font-semibold text-white"
-                style={{
-                  fontSize: "clamp(1.9rem,3.5vw,2.8rem)",
-                  letterSpacing: "-0.025em",
-                  lineHeight: "1.1",
-                }}
-                initial={{ y: "100%" }}
-                animate={inView ? { y: "0%" } : {}}
-                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-              >
-                Three disciplines.<br />One team.
-              </motion.h2>
-            </div>
+              Three disciplines.<br />One team.
+            </motion.h2>
           </div>
 
           <motion.p
@@ -302,7 +276,7 @@ export function WhyStructure() {
             style={{ color: "rgba(255,255,255,0.38)", lineHeight: "1.82" }}
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.7, delay: 0.25 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
           >
             Every engagement is senior-led. No handoffs to juniors, no outsourcing.
           </motion.p>

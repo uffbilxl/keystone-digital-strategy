@@ -12,7 +12,6 @@ import { useRef } from "react";
 import { ParticleCanvas } from "../ParticleCanvas";
 import { LogoMark } from "../Logo";
 
-// Each headline line slides up through a mask clip
 function RevealLine({
   children,
   delay = 0,
@@ -35,23 +34,10 @@ function RevealLine({
   );
 }
 
-// Small floating geometric accent
 function FloatingAccent({
-  x,
-  y,
-  size,
-  delay,
-  duration,
-  opacity,
-  shape = "circle",
+  x, y, size, delay, duration, opacity, shape = "circle",
 }: {
-  x: string;
-  y: string;
-  size: number;
-  delay: number;
-  duration: number;
-  opacity: number;
-  shape?: "circle" | "diamond" | "hline";
+  x: string; y: string; size: number; delay: number; duration: number; opacity: number; shape?: "circle" | "diamond" | "hline";
 }) {
   return (
     <motion.div
@@ -69,49 +55,20 @@ function FloatingAccent({
         transition={{ duration, repeat: Infinity, ease: "easeInOut" }}
       >
         {shape === "circle" && (
-          <div
-            style={{
-              width: size,
-              height: size,
-              borderRadius: "50%",
-              border: "1px solid rgba(173,138,82,0.28)",
-              background: "radial-gradient(circle, rgba(173,138,82,0.05), transparent 70%)",
-            }}
-          />
+          <div style={{ width: size, height: size, borderRadius: "50%", border: "1px solid rgba(173,138,82,0.28)", background: "radial-gradient(circle, rgba(173,138,82,0.05), transparent 70%)" }} />
         )}
         {shape === "diamond" && (
-          <div
-            style={{
-              width: size,
-              height: size,
-              border: "1px solid rgba(159,176,190,0.14)",
-              transform: "rotate(45deg)",
-            }}
-          />
+          <div style={{ width: size, height: size, border: "1px solid rgba(159,176,190,0.14)", transform: "rotate(45deg)" }} />
         )}
         {shape === "hline" && (
-          <div
-            style={{
-              width: size,
-              height: "1px",
-              background:
-                "linear-gradient(90deg, transparent, rgba(173,138,82,0.35), transparent)",
-            }}
-          />
+          <div style={{ width: size, height: "1px", background: "linear-gradient(90deg, transparent, rgba(173,138,82,0.35), transparent)" }} />
         )}
       </motion.div>
     </motion.div>
   );
 }
 
-// The large animated keystone arch – uses the exact brand shape
-function HeroArch({
-  springX,
-  springY,
-}: {
-  springX: ReturnType<typeof useSpring>;
-  springY: ReturnType<typeof useSpring>;
-}) {
+function HeroArch({ springX, springY }: { springX: ReturnType<typeof useSpring>; springY: ReturnType<typeof useSpring> }) {
   const rotateY = useTransform(springX, [-500, 500], [-4, 4]);
   const rotateX = useTransform(springY, [-300, 300], [3, -3]);
   const translateX = useTransform(springX, [-500, 500], [-14, 14]);
@@ -120,36 +77,16 @@ function HeroArch({
   return (
     <motion.div
       className="absolute pointer-events-none hidden lg:flex items-center"
-      style={{
-        right: "-2%",
-        top: 0,
-        bottom: 0,
-        rotateY,
-        rotateX,
-        x: translateX,
-        y: translateY,
-        transformPerspective: "1200px",
-        transformStyle: "preserve-3d",
-      }}
+      style={{ right: "-2%", top: 0, bottom: 0, rotateY, rotateX, x: translateX, y: translateY, transformPerspective: "1200px", transformStyle: "preserve-3d" }}
     >
-      {/* Outer glow bloom */}
       <motion.div
         className="absolute"
-        style={{
-          inset: "15%",
-          background:
-            "radial-gradient(ellipse at 50% 40%, rgba(173,138,82,0.1), transparent 65%)",
-          filter: "blur(48px)",
-        }}
+        style={{ inset: "15%", background: "radial-gradient(ellipse at 50% 40%, rgba(173,138,82,0.1), transparent 65%)", filter: "blur(48px)" }}
         animate={{ opacity: [0.7, 1, 0.7] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       />
-
       <motion.svg
-        width="520"
-        height="620"
-        viewBox="0 0 100 100"
-        fill="none"
+        width="520" height="620" viewBox="0 0 100 100" fill="none"
         initial={{ opacity: 0, scale: 0.92, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -160,107 +97,49 @@ function HeroArch({
             <stop offset="0%" stopColor="#AD8A52" stopOpacity="0.1" />
             <stop offset="100%" stopColor="#AD8A52" stopOpacity="0" />
           </radialGradient>
-          <filter id="archGlowFilter">
-            <feGaussianBlur stdDeviation="0.5" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
         </defs>
-
-        {/* Subtle fill glow */}
         <rect width="100" height="100" fill="url(#archCenterGlow)" />
-
-        {/* Outer arch silhouette – brand shape, very faint fill */}
         <motion.path
           d="M 12,86 L 12,48 A 38,38 0 0 1 88,48 L 88,86 L 72,86 L 72,48 A 22,22 0 0 0 28,48 L 28,86 Z"
-          fill="rgba(173,138,82,0.03)"
-          stroke="rgba(173,138,82,0.22)"
-          strokeWidth="0.4"
+          fill="rgba(173,138,82,0.03)" stroke="rgba(173,138,82,0.22)" strokeWidth="0.4"
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{ pathLength: 1, opacity: 1 }}
           transition={{ duration: 2.2, delay: 0.7, ease: "easeInOut" }}
         />
-
-        {/* Foundation bar */}
-        <motion.rect
-          x="6.5"
-          y="85.6"
-          width="87"
-          height="3"
-          rx="0.6"
-          fill="rgba(173,138,82,0.18)"
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 1 }}
+        <motion.rect x="6.5" y="85.6" width="87" height="3" rx="0.6" fill="rgba(173,138,82,0.18)"
+          initial={{ scaleX: 0, opacity: 0 }} animate={{ scaleX: 1, opacity: 1 }}
           style={{ transformOrigin: "50px 87px" }}
           transition={{ duration: 0.9, delay: 2.4, ease: [0.16, 1, 0.3, 1] }}
         />
-
-        {/* Framework lines (from logo) */}
         {[
           { x1: 61.66, y1: 29.34, x2: 70.14, y2: 15.77, d: 2.8 },
           { x1: 69.42, y1: 37.67, x2: 83.55, y2: 30.16, d: 3.0 },
           { x1: 38.34, y1: 29.34, x2: 29.86, y2: 15.77, d: 2.8 },
           { x1: 30.58, y1: 37.67, x2: 16.45, y2: 30.16, d: 3.0 },
         ].map((ln, i) => (
-          <motion.line
-            key={i}
-            x1={ln.x1}
-            y1={ln.y1}
-            x2={ln.x2}
-            y2={ln.y2}
-            stroke="rgba(173,138,82,0.35)"
-            strokeWidth="0.7"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 1 }}
+          <motion.line key={i} x1={ln.x1} y1={ln.y1} x2={ln.x2} y2={ln.y2}
+            stroke="rgba(173,138,82,0.35)" strokeWidth="0.7"
+            initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }}
             transition={{ duration: 0.6, delay: ln.d, ease: "easeOut" }}
           />
         ))}
-
-        {/* Keystone wedge – brand gold colour */}
-        <motion.polygon
-          points="41.5,8.5 58.5,8.5 55.8,27.5 44.2,27.5"
-          fill="rgba(173,138,82,0.15)"
-          stroke="#C2A065"
-          strokeWidth="0.6"
-          strokeLinejoin="round"
-          initial={{ opacity: 0, scale: 0.6 }}
-          animate={{ opacity: 1, scale: 1 }}
+        <motion.polygon points="41.5,8.5 58.5,8.5 55.8,27.5 44.2,27.5"
+          fill="rgba(173,138,82,0.15)" stroke="#C2A065" strokeWidth="0.6" strokeLinejoin="round"
+          initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }}
           style={{ transformOrigin: "50px 18px" }}
           transition={{ duration: 0.9, delay: 3.0, ease: [0.16, 1, 0.3, 1] }}
         />
-
-        {/* Pulsing centre circle */}
-        <motion.circle
-          cx="50"
-          cy="55"
-          r="8"
-          fill="none"
-          stroke="rgba(173,138,82,0.3)"
-          strokeWidth="0.5"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
+        <motion.circle cx="50" cy="55" r="8" fill="none" stroke="rgba(173,138,82,0.3)" strokeWidth="0.5"
+          initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
           style={{ transformOrigin: "50px 55px" }}
           transition={{ duration: 0.8, delay: 2.6 }}
         />
-        <motion.circle
-          cx="50"
-          cy="55"
-          r="4"
-          fill="rgba(173,138,82,0.08)"
-          stroke="rgba(173,138,82,0.5)"
-          strokeWidth="0.4"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: [0, 1], opacity: [0, 1] }}
+        <motion.circle cx="50" cy="55" r="4" fill="rgba(173,138,82,0.08)" stroke="rgba(173,138,82,0.5)" strokeWidth="0.4"
+          initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
           style={{ transformOrigin: "50px 55px" }}
           transition={{ duration: 0.6, delay: 2.9 }}
         />
-        {/* Ripple pulse on centre dot */}
-        <motion.circle
-          cx="50"
-          cy="55"
-          r="4"
-          fill="none"
-          stroke="rgba(173,138,82,0.25)"
-          strokeWidth="0.4"
+        <motion.circle cx="50" cy="55" r="4" fill="none" stroke="rgba(173,138,82,0.25)" strokeWidth="0.4"
           animate={{ r: [4, 14], opacity: [0.5, 0] }}
           transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut", delay: 3.5 }}
         />
@@ -272,18 +151,15 @@ function HeroArch({
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
 
-  // Mouse tracking
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
   const springX = useSpring(rawX, { stiffness: 40, damping: 18 });
   const springY = useSpring(rawY, { stiffness: 40, damping: 18 });
 
-  // Background glow follows mouse
   const glowBgX = useTransform(springX, [-500, 500], [25, 75]);
   const glowBgY = useTransform(springY, [-300, 300], [20, 80]);
   const bgGlow = useMotionTemplate`radial-gradient(700px circle at ${glowBgX}% ${glowBgY}%, rgba(173,138,82,0.07), transparent 60%)`;
 
-  // Scroll-driven parallax
   const { scrollY } = useScroll();
   const contentY = useTransform(scrollY, [0, 700], [0, -90]);
   const contentOpacity = useTransform(scrollY, [0, 450], [1, 0]);
@@ -304,156 +180,71 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex flex-col justify-between overflow-hidden"
+      className="relative min-h-screen flex flex-col overflow-hidden"
       style={{ background: "#0C2340" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => { rawX.set(0); rawY.set(0); }}
     >
-      {/* Layer 1 – particles (slowest parallax) */}
       <motion.div className="absolute inset-0" style={{ y: particlesScrollY }}>
         <ParticleCanvas count={55} />
       </motion.div>
-
-      {/* Layer 2 – mouse-reactive background glow */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: bgGlow }}
-      />
-
-      {/* Layer 3 – column grid overlay */}
+      <motion.div className="absolute inset-0 pointer-events-none" style={{ background: bgGlow }} />
       <div className="grid-overlay" style={{ opacity: 0.12 }} />
+      <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 3px)" }} />
 
-      {/* Layer 4 – fine scan lines for depth */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 3px)",
-        }}
-      />
-
-      {/* Floating geometric accents */}
       <FloatingAccent x="4%" y="18%" size={72} delay={1.8} duration={13} opacity={0.35} shape="circle" />
       <FloatingAccent x="7%" y="62%" size={36} delay={2.2} duration={15} opacity={0.28} shape="diamond" />
       <FloatingAccent x="55%" y="8%" size={100} delay={1.2} duration={17} opacity={0.18} shape="hline" />
       <FloatingAccent x="14%" y="82%" size={140} delay={0.8} duration={19} opacity={0.12} shape="hline" />
       <FloatingAccent x="68%" y="78%" size={52} delay={1.5} duration={11} opacity={0.22} shape="diamond" />
 
-      {/* Floating data labels – atmosphere */}
-      {[
-        { text: "BRAND", x: "74%", y: "22%", delay: 4.0 },
-        { text: "WEB", x: "79%", y: "38%", delay: 4.3 },
-        { text: "SEC", x: "76%", y: "54%", delay: 4.1 },
-        { text: "UX", x: "82%", y: "46%", delay: 4.5 },
-      ].map(({ text, x, y, delay }) => (
-        <motion.span
-          key={text}
-          className="absolute pointer-events-none font-mono select-none hidden lg:block"
-          style={{
-            left: x,
-            top: y,
-            fontSize: "8px",
-            letterSpacing: "0.32em",
-            color: "rgba(173,138,82,0.22)",
-          }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 0.5, 0.2, 0.5, 0] }}
-          transition={{ duration: 7, delay, repeat: Infinity, ease: "easeInOut" }}
-        >
-          {text}
-        </motion.span>
-      ))}
-
-      {/* Layer 5 – large keystone arch (medium parallax) */}
       <motion.div className="absolute inset-0" style={{ y: archScrollY }}>
         <HeroArch springX={springX} springY={springY} />
       </motion.div>
 
-      {/* Layer 6 – main content (fastest parallax, fades out) */}
+      {/* Main content — vertically centred, never touches nav or bottom strip */}
       <motion.div
-        className="relative flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full px-6 md:px-10 pt-24 md:pt-32 pb-12 md:pb-16"
-        style={{ y: contentY, opacity: contentOpacity, zIndex: 10 }}
+        className="relative flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full px-6 md:px-10"
+        style={{ paddingTop: "6rem", paddingBottom: "2rem", y: contentY, opacity: contentOpacity, zIndex: 10 }}
       >
-        {/* Label with animated line */}
-        <motion.div
-          className="flex items-center gap-3 mb-9 md:mb-11"
-          initial={{ opacity: 0, x: -18 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <motion.div
-            style={{ height: "1px", background: "rgba(173,138,82,0.55)" }}
-            initial={{ width: 0 }}
-            animate={{ width: 28 }}
-            transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          />
-          <p
-            className="text-xs font-medium uppercase"
-            style={{ color: "rgba(255,255,255,0.3)", letterSpacing: "0.3em" }}
-          >
-            Digital Strategy
-          </p>
-        </motion.div>
-
-        {/* Headline – each line reveals from below */}
         <h1
           className="font-semibold text-white"
-          style={{
-            fontSize: "clamp(2.4rem,7vw,6.5rem)",
-            letterSpacing: "-0.03em",
-            lineHeight: "1.05",
-            maxWidth: "900px",
-          }}
+          style={{ fontSize: "clamp(2.6rem,7vw,6.5rem)", letterSpacing: "-0.03em", lineHeight: "1.05", maxWidth: "820px" }}
         >
-          <RevealLine delay={0.45}>Brands built.</RevealLine>
-          <RevealLine delay={0.6}>Websites secured.</RevealLine>
-          <RevealLine delay={0.75}>
+          <RevealLine delay={0.3}>Brands built.</RevealLine>
+          <RevealLine delay={0.45}>Websites secured.</RevealLine>
+          <RevealLine delay={0.6}>
             <span style={{ color: "#AD8A52" }}>Done right.</span>
           </RevealLine>
         </h1>
 
-        {/* Subtext */}
         <motion.p
-          initial={{ opacity: 0, y: 22 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 font-medium"
-          style={{
-            color: "rgba(255,255,255,0.42)",
-            fontSize: "clamp(0.95rem,1.4vw,1.1rem)",
-            maxWidth: "400px",
-            lineHeight: "1.8",
-          }}
+          transition={{ duration: 0.9, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
+          style={{ marginTop: "2rem", color: "rgba(255,255,255,0.42)", fontSize: "clamp(0.95rem,1.4vw,1.1rem)", maxWidth: "380px", lineHeight: "1.8", fontWeight: 400 }}
         >
           Brand identities, websites, and cybersecurity testing.
           Delivered by a four-person specialist team.
         </motion.p>
 
-        {/* CTAs */}
         <motion.div
-          initial={{ opacity: 0, y: 22 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.3, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 flex flex-wrap items-center gap-4"
+          transition={{ duration: 0.9, delay: 1.15, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-wrap items-center gap-4"
+          style={{ marginTop: "2.5rem" }}
         >
           <a
             href="#services"
             onClick={(e) => { e.preventDefault(); scrollTo("services"); }}
             className="group inline-flex items-center gap-2.5 px-6 py-3 text-sm font-semibold transition-all duration-200"
-            style={{ background: "#AD8A52", color: "#fff", letterSpacing: "0.04em" }}
+            style={{ background: "#AD8A52", color: "#fff", letterSpacing: "0.02em" }}
             onMouseEnter={(e) => { e.currentTarget.style.background = "#C2A065"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "#AD8A52"; }}
           >
             Our Services
-            <svg
-              viewBox="0 0 16 16"
-              width="13"
-              height="13"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="group-hover:translate-x-1 transition-transform duration-200"
-            >
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-1 transition-transform duration-200">
               <path d="M3 8h10M9 4l4 4-4 4" />
             </svg>
           </a>
@@ -461,22 +252,9 @@ export function Hero() {
             href="#contact"
             onClick={(e) => { e.preventDefault(); scrollTo("contact"); }}
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium"
-            style={{
-              color: "rgba(255,255,255,0.6)",
-              border: "1px solid rgba(255,255,255,0.18)",
-              letterSpacing: "0.04em",
-              transition: "all 0.2s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#fff";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.48)";
-              e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "rgba(255,255,255,0.6)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
-              e.currentTarget.style.background = "transparent";
-            }}
+            style={{ color: "rgba(255,255,255,0.6)", border: "1px solid rgba(255,255,255,0.18)", letterSpacing: "0.02em", transition: "all 0.2s ease" }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.48)"; e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)"; e.currentTarget.style.background = "transparent"; }}
           >
             Get in Touch
           </a>
@@ -484,73 +262,46 @@ export function Hero() {
 
         {/* Scroll indicator */}
         <motion.div
-          className="mt-14 flex items-center gap-3"
+          className="flex items-center gap-3"
+          style={{ marginTop: "3.5rem" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2.8, duration: 1 }}
+          transition={{ delay: 2.6, duration: 1 }}
         >
           <div style={{ width: "1px", height: "36px", overflow: "hidden", position: "relative" }}>
             <motion.div
-              style={{
-                position: "absolute",
-                width: "1px",
-                height: "100%",
-                background: "linear-gradient(to bottom, transparent, rgba(173,138,82,0.7), transparent)",
-              }}
+              style={{ position: "absolute", width: "1px", height: "100%", background: "linear-gradient(to bottom, transparent, rgba(173,138,82,0.7), transparent)" }}
               animate={{ y: ["-100%", "100%"] }}
               transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
-          <span
-            className="text-xs uppercase"
-            style={{ color: "rgba(255,255,255,0.22)", letterSpacing: "0.24em" }}
-          >
-            Scroll
-          </span>
         </motion.div>
       </motion.div>
 
-      {/* Bottom stats strip */}
+      {/* Stats strip */}
       <motion.div
         className="relative max-w-6xl mx-auto w-full px-6 md:px-10 pb-10"
-        style={{
-          borderTop: "1px solid rgba(255,255,255,0.06)",
-          zIndex: 10,
-          y: contentY,
-          opacity: contentOpacity,
-        }}
+        style={{ borderTop: "1px solid rgba(255,255,255,0.06)", zIndex: 10, y: contentY, opacity: contentOpacity }}
       >
         <div className="pt-7 flex items-center gap-8 md:gap-14">
           {[
-            { n: "3+", label: "Years", delay: 1.55 },
-            { n: "100+", label: "Projects", delay: 1.7 },
-            { n: "4", label: "Specialists", delay: 1.85 },
+            { n: "3+", label: "Years", delay: 1.4 },
+            { n: "100+", label: "Projects", delay: 1.55 },
+            { n: "4", label: "Specialists", delay: 1.7 },
           ].map(({ n, label, delay }) => (
             <motion.div
               key={label}
               className="flex items-baseline gap-2"
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span
-                className="font-semibold text-white"
-                style={{ fontSize: "1.5rem", letterSpacing: "-0.025em" }}
-              >
-                {n}
-              </span>
-              <span
-                className="text-xs uppercase"
-                style={{ color: "rgba(255,255,255,0.28)", letterSpacing: "0.14em" }}
-              >
-                {label}
-              </span>
+              <span className="font-semibold text-white" style={{ fontSize: "1.5rem", letterSpacing: "-0.025em" }}>{n}</span>
+              <span style={{ color: "rgba(255,255,255,0.28)", fontSize: "0.7rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{label}</span>
             </motion.div>
           ))}
-
-          {/* Right side – brand mark */}
           <motion.div
-            className="ml-auto opacity-10 hidden md:block"
+            className="ml-auto hidden md:block"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.08 }}
             transition={{ delay: 2.2, duration: 1.2 }}

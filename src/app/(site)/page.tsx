@@ -125,27 +125,6 @@ export default function Home() {
         />
 
         <div ref={exploreRef} className="max-w-6xl mx-auto px-6 md:px-10 relative">
-          {/* Label */}
-          <motion.div
-            className="flex items-center gap-3 mb-12"
-            initial={{ opacity: 0, x: -14 }}
-            animate={exploreInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <motion.div
-              style={{ height: "1px", background: "rgba(12,35,64,0.25)" }}
-              initial={{ width: 0 }}
-              animate={exploreInView ? { width: 20 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            />
-            <p
-              className="text-xs font-medium uppercase"
-              style={{ color: "var(--mist)", letterSpacing: "0.3em" }}
-            >
-              Explore
-            </p>
-          </motion.div>
-
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {items.map((item, i) => (

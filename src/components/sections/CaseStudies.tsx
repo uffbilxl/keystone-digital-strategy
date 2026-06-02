@@ -217,36 +217,15 @@ export function CaseStudies() {
       <div className="relative max-w-6xl mx-auto px-6 md:px-10">
 
         {/* Header */}
-        <div ref={headerRef} className="mb-16 md:mb-22">
-          <motion.div
-            className="flex items-center gap-3 mb-5"
-            initial={{ opacity: 0, x: -16 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <motion.div
-              style={{ height: "1px", background: "rgba(173,138,82,0.55)" }}
-              initial={{ width: 0 }}
-              animate={inView ? { width: 24 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            />
-            <span className="text-xs font-semibold uppercase" style={{ color: "#C2A065", letterSpacing: "0.34em" }}>
-              Selected Engagements
-            </span>
-          </motion.div>
-
+        <div ref={headerRef} className="mb-16 md:mb-20">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div style={{ overflow: "hidden" }}>
               <motion.h2
                 className="font-semibold text-white"
-                style={{
-                  fontSize: "clamp(2rem,3.5vw,2.75rem)",
-                  letterSpacing: "-0.018em",
-                  lineHeight: "1.15",
-                }}
+                style={{ fontSize: "clamp(2rem,3.5vw,2.75rem)", letterSpacing: "-0.018em", lineHeight: "1.15" }}
                 initial={{ y: "105%" }}
                 animate={inView ? { y: "0%" } : {}}
-                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
               >
                 Work that defines outcomes
               </motion.h2>
@@ -255,7 +234,7 @@ export function CaseStudies() {
             <motion.p
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
               className="text-sm md:max-w-xs"
               style={{ color: "rgba(255,255,255,0.38)" }}
             >

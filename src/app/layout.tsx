@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Schibsted_Grotesk } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const schibsted = Schibsted_Grotesk({
-  variable: "--font-schibsted",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
@@ -56,8 +56,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${schibsted.variable} h-full`}>
-      <body className="min-h-full antialiased" style={{ fontFamily: "var(--font-schibsted), system-ui, sans-serif" }}>
+    <html lang="en" className={`${inter.variable} h-full`}>
+      <body className="min-h-full antialiased" style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}>
         {children}
       </body>
     </html>

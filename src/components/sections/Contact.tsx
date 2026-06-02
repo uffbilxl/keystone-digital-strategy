@@ -69,25 +69,17 @@ export function Contact() {
 
           {/* Left */}
           <div>
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.5 }}
-              className="block text-xs font-semibold uppercase mb-4"
-              style={{ color: "#C2A065", letterSpacing: "0.34em" }}
-            >
-              Get In Touch
-            </motion.span>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.65, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: 0.07 }}
-              className="font-semibold text-white mb-6"
-              style={{ fontSize: "clamp(2rem,3.5vw,2.75rem)", letterSpacing: "-0.018em", lineHeight: "1.15" }}
-            >
-              Let&apos;s work together.
-            </motion.h2>
+            <div style={{ overflow: "hidden", marginBottom: "1.5rem" }}>
+              <motion.h2
+                initial={{ y: "105%", opacity: 0 }}
+                animate={inView ? { y: "0%", opacity: 1 } : {}}
+                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                className="font-semibold text-white"
+                style={{ fontSize: "clamp(2rem,3.5vw,2.75rem)", letterSpacing: "-0.018em", lineHeight: "1.15" }}
+              >
+                Let&apos;s work together.
+              </motion.h2>
+            </div>
 
             <motion.p
               initial={{ opacity: 0 }}

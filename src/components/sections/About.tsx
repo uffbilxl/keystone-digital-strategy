@@ -256,7 +256,7 @@ export function About() {
               ].map(({ n, label }) => (
                 <div key={label} className="flex flex-col gap-0.5">
                   <span className="font-semibold" style={{ color: "var(--navy)", fontSize: "1.25rem", letterSpacing: "-0.02em" }}>{n}</span>
-                  <span className="text-xs uppercase" style={{ color: "var(--mist)", letterSpacing: "0.14em" }}>{label}</span>
+                  <span className="text-xs" style={{ color: "var(--mist)" }}>{label}</span>
                 </div>
               ))}
             </div>
