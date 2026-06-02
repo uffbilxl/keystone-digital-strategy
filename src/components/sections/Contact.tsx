@@ -59,7 +59,7 @@ export function Contact() {
     <section
       id="contact"
       className="relative py-16 md:py-28 lg:py-36 overflow-hidden"
-      style={{ background: "var(--navy)", borderTop: "1px solid rgba(159,176,190,0.1)" }}
+      style={{ background: "#0C2340", borderTop: "none" }}
     >
       <div className="grid-overlay" style={{ opacity: 0.35 }} />
       <div className="absolute pointer-events-none" style={{ bottom: "-100px", left: "-100px", width: "500px", height: "500px", background: "radial-gradient(circle, rgba(173,138,82,0.07), transparent 70%)" }} />

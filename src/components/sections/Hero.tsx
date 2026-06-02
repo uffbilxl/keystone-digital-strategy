@@ -22,7 +22,8 @@ function RevealLine({
   style?: React.CSSProperties;
 }) {
   return (
-    <div style={{ overflow: "hidden", ...style }}>
+    // Extra bottom padding so descenders ('y','g','p') aren't clipped
+    <div style={{ overflow: "hidden", paddingBottom: "0.14em", marginBottom: "-0.14em", ...style }}>
       <motion.div
         initial={{ y: "108%", opacity: 0 }}
         animate={{ y: "0%", opacity: 1 }}

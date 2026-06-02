@@ -137,27 +137,15 @@ function TiltCard({ p, i, inView }: { p: Pillar; i: number; inView: boolean }) {
         {p.n}
       </span>
 
-      {/* Animated number indicator */}
+      {/* Icon */}
       <motion.div
-        className="mb-6 md:mb-8 flex items-center justify-between"
+        className="mb-6 md:mb-8"
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={{ delay: 0.3 + i * 0.12 }}
+        style={{ color: "rgba(255,255,255,0.28)" }}
       >
-        {/* Icon */}
-        <div style={{ color: "rgba(255,255,255,0.28)" }}>{p.icon}</div>
-
-        {/* Number badge */}
-        <span
-          className="text-xs font-semibold"
-          style={{
-            color: "rgba(173,138,82,0.55)",
-            letterSpacing: "0.14em",
-            fontVariantNumeric: "tabular-nums",
-          }}
-        >
-          {p.n}
-        </span>
+        {p.icon}
       </motion.div>
 
       {/* Content */}

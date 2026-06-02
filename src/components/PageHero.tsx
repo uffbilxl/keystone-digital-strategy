@@ -17,7 +17,7 @@ interface PageHeroProps {
 
 function RevealLine({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   return (
-    <div style={{ overflow: "hidden" }}>
+    <div style={{ overflow: "hidden", paddingBottom: "0.14em", marginBottom: "-0.14em" }}>
       <motion.div
         initial={{ y: "108%", opacity: 0 }}
         animate={{ y: "0%", opacity: 1 }}
@@ -43,9 +43,9 @@ function MiniArch({
 
   return (
     <motion.div
-      className="absolute pointer-events-none hidden lg:flex items-center"
+      className="absolute pointer-events-none hidden md:flex items-center"
       style={{
-        right: "0%",
+        right: "-1%",
         top: 0,
         bottom: 0,
         rotateY,

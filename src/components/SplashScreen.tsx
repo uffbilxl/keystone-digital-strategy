@@ -101,10 +101,18 @@ function SplashArch() {
 
 export function SplashScreen({ onComplete }: SplashScreenProps) {
   const [exiting, setExiting] = useState(false);
+  const [skip] = useState(() =>
+    typeof window !== "undefined" && sessionStorage.getItem("ks_splash") === "1"
+  );
 
   useEffect(() => {
-    // Arch animation takes ~3s to complete (path draw + wedge + ripple)
-    // Exit at 3.5s — user has seen the full reveal
+    // Already shown this session — skip immediately
+    if (skip || sessionStorage.getItem("ks_splash") === "1") {
+      onComplete();
+      return;
+    }
+    sessionStorage.setItem("ks_splash", "1");
+
     const exitTimer = setTimeout(() => {
       setExiting(true);
       setTimeout(onComplete, 700);
@@ -112,6 +120,8 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
 
     return () => clearTimeout(exitTimer);
   }, [onComplete]);
+
+  if (skip) return null;
 
   return (
     <AnimatePresence>
