@@ -40,7 +40,7 @@ export function Portfolio() {
             className="text-xs"
             style={{ color: "var(--mist)" }}
           >
-            10 projects. Case studies coming soon.
+            100+ projects. Case studies coming soon.
           </motion.p>
         </div>
 

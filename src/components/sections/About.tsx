@@ -64,12 +64,12 @@ export function About() {
               Keystone Digital Strategy is a boutique digital consultancy. We are four specialists working together to deliver brand, web, and security services to clients worldwide.
             </p>
             <p className="text-sm leading-relaxed" style={{ color: "var(--steel)", lineHeight: "1.85" }}>
-              Our work speaks for itself: 10 successful projects across 3 years, delivered for clients across multiple industries and continents. Every engagement is senior-led.
+              Our work speaks for itself: 100+ successful projects across 3 years, delivered for clients across multiple industries and continents. Every engagement is senior-led.
             </p>
             <div className="flex items-center gap-8 pt-4">
               {[
                 { n: "3+", label: "Years" },
-                { n: "10+", label: "Projects" },
+                { n: "100+", label: "Projects" },
                 { n: "Global", label: "Reach" },
               ].map(({ n, label }) => (
                 <div key={label} className="flex flex-col gap-0.5">

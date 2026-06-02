@@ -90,7 +90,7 @@ export function Hero() {
         <div className="pt-8 flex items-center gap-12">
           {[
             { n: "3+", label: "Years" },
-            { n: "10+", label: "Projects" },
+            { n: "100+", label: "Projects" },
             { n: "4", label: "Specialists" },
           ].map(({ n, label }) => (
             <div key={label} className="flex items-baseline gap-2">
