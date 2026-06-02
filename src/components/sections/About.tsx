@@ -43,6 +43,8 @@ function FlipCard({ member, index, inView }: { member: typeof team[0]; index: nu
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: 0.2 + index * 0.08 }}
       style={{ perspective: "1200px", height: "320px" }}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
       onClick={() => setFlipped(!flipped)}
       className="cursor-pointer"
     >
