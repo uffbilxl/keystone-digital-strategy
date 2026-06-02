@@ -58,14 +58,14 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative py-28 md:py-36 overflow-hidden"
+      className="relative py-16 md:py-28 lg:py-36 overflow-hidden"
       style={{ background: "var(--navy)", borderTop: "1px solid rgba(159,176,190,0.1)" }}
     >
       <div className="grid-overlay" style={{ opacity: 0.35 }} />
       <div className="absolute pointer-events-none" style={{ bottom: "-100px", left: "-100px", width: "500px", height: "500px", background: "radial-gradient(circle, rgba(173,138,82,0.07), transparent 70%)" }} />
 
       <div ref={sectionRef} className="relative max-w-6xl mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24">
 
           {/* Left */}
           <div>
@@ -169,7 +169,7 @@ export function Contact() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-5 p-8 rounded-sm"
+                className="flex flex-col gap-5 p-5 md:p-8 rounded-sm"
                 style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(159,176,190,0.12)" }}
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">

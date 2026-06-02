@@ -11,7 +11,7 @@ interface PageHeroProps {
 export function PageHero({ label, title, description }: PageHeroProps) {
   return (
     <section
-      className="pt-36 pb-20"
+      className="pt-28 md:pt-36 pb-12 md:pb-20"
       style={{ background: "#0C2340", borderBottom: "1px solid rgba(159,176,190,0.1)" }}
     >
       <div className="max-w-6xl mx-auto px-6 md:px-10">

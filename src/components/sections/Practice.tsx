@@ -92,7 +92,7 @@ function ServiceCard({ svc, index }: { svc: typeof services[0]; index: number })
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: index * 0.08 }}
-      className="flex flex-col p-8 cursor-default"
+      className="flex flex-col p-6 md:p-8 cursor-default"
       style={{
         background: "#fff",
         borderTop: `2px solid ${hovered ? "#AD8A52" : "var(--hair)"}`,
@@ -145,7 +145,7 @@ export function Practice() {
   const inView = useInView(headerRef, { once: true, margin: "-10% 0px" });
 
   return (
-    <section id="services" style={{ background: "var(--paper)", borderTop: "1px solid var(--hair)" }} className="py-24 md:py-32">
+    <section id="services" style={{ background: "var(--paper)", borderTop: "1px solid var(--hair)" }} className="py-16 md:py-24 lg:py-32">
       <div className="max-w-6xl mx-auto px-6 md:px-10">
         <div ref={headerRef} className="flex items-end justify-between mb-14 gap-8">
           <motion.p

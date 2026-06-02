@@ -50,7 +50,7 @@ export function WhyStructure() {
   return (
     <section
       id="what-we-do"
-      className="py-24 md:py-32"
+      className="py-16 md:py-24 lg:py-32"
       style={{ background: "#0C2340", borderTop: "1px solid rgba(159,176,190,0.1)" }}
     >
       <div ref={ref} className="max-w-6xl mx-auto px-6 md:px-10">
@@ -74,10 +74,9 @@ export function WhyStructure() {
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: i * 0.1 }}
-              className="relative flex flex-col p-10 overflow-hidden"
+              className="pillar-card relative flex flex-col overflow-hidden"
               style={{
                 background: hovered === p.n ? "rgba(255,255,255,0.05)" : "rgba(10,29,53,0.95)",
-                minHeight: "420px",
                 transition: "background 0.3s ease",
                 cursor: "default",
               }}
@@ -102,7 +101,7 @@ export function WhyStructure() {
 
               {/* Icon */}
               <div
-                className="mb-10"
+                className="mb-6 md:mb-10"
                 style={{ color: hovered === p.n ? "#C2A065" : "rgba(255,255,255,0.3)", transition: "color 0.3s ease" }}
               >
                 {p.icon}

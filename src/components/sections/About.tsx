@@ -126,13 +126,12 @@ function FlipCard({ member, index, inView }: { member: TeamMember; index: number
           }}
         >
           {/* Icons row */}
-          <div style={{ display: "flex", gap: "12px" }}>
+          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
             {member.icons.map((Icon, i) => (
               <div
                 key={i}
+                className="icon-circle"
                 style={{
-                  width: "64px",
-                  height: "64px",
                   borderRadius: "50%",
                   background: "var(--paper)",
                   border: "1px solid var(--hair)",
@@ -142,7 +141,7 @@ function FlipCard({ member, index, inView }: { member: TeamMember; index: number
                   color: "#0C2340",
                 }}
               >
-                <Icon size={28} />
+                <Icon size={24} />
               </div>
             ))}
           </div>
@@ -222,7 +221,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="py-24 md:py-32"
+      className="py-16 md:py-24 lg:py-32"
       style={{ background: "var(--paper)", borderTop: "1px solid var(--hair)" }}
     >
       <div ref={ref} className="max-w-6xl mx-auto px-6 md:px-10">
@@ -283,7 +282,7 @@ export function About() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {team.map((member, i) => (
               <FlipCard key={i} member={member} index={i} inView={inView} />
             ))}

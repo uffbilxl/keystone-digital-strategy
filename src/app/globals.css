@@ -49,6 +49,42 @@ body {
   border-radius: 2px;
 }
 
+/* Flip card icon circle */
+.icon-circle {
+  width: 52px;
+  height: 52px;
+}
+@media (min-width: 768px) {
+  .icon-circle {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* Responsive section padding */
+.section-py {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 768px) {
+  .section-py {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+/* Responsive WhyStructure card */
+.pillar-card {
+  padding: 28px;
+  min-height: 0;
+}
+@media (min-width: 768px) {
+  .pillar-card {
+    padding: 40px;
+    min-height: 420px;
+  }
+}
+
 /* Global smooth transitions on interactive elements */
 a, button {
   transition: color 0.18s ease, opacity 0.18s ease, background 0.18s ease, border-color 0.18s ease;

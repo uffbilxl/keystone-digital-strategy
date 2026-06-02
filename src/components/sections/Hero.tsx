@@ -20,12 +20,12 @@ export function Hero() {
       style={{ background: "#0C2340" }}
     >
       <AnimatedBackground gold />
-      <div className="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full px-6 md:px-10 pt-32 pb-16">
+      <div className="flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full px-6 md:px-10 pt-24 md:pt-32 pb-12 md:pb-16">
 
         {/* Label */}
         <motion.p
           {...fade(0)}
-          className="text-xs font-medium uppercase mb-10"
+          className="text-xs font-medium uppercase mb-6 md:mb-10"
           style={{ color: "rgba(255,255,255,0.32)", letterSpacing: "0.28em" }}
         >
           Digital Strategy
@@ -36,9 +36,9 @@ export function Hero() {
           {...fade(0.1)}
           className="font-semibold text-white"
           style={{
-            fontSize: "clamp(3rem,7vw,6.5rem)",
+            fontSize: "clamp(2.4rem,7vw,6.5rem)",
             letterSpacing: "-0.03em",
-            lineHeight: "1.02",
+            lineHeight: "1.05",
             maxWidth: "900px",
           }}
         >
@@ -114,7 +114,7 @@ export function Hero() {
         className="max-w-6xl mx-auto w-full px-6 md:px-10 pb-10"
         style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
       >
-        <div className="pt-8 flex items-center gap-12">
+        <div className="pt-8 flex items-center gap-6 md:gap-12">
           {[
             { n: "3+", label: "Years" },
             { n: "100+", label: "Projects" },
