@@ -94,7 +94,7 @@ function FlipCard({ member, index, inView }: { member: TeamMember; index: number
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: 0.2 + index * 0.08 }}
-      style={{ perspective: "1200px", height: "320px" }}
+      style={{ perspective: "1200px", height: "380px" }}
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
       onClick={() => setFlipped(!flipped)}
@@ -119,20 +119,20 @@ function FlipCard({ member, index, inView }: { member: TeamMember; index: number
             WebkitBackfaceVisibility: "hidden",
             background: "#fff",
             border: "1px solid var(--hair)",
-            padding: "28px",
+            padding: "32px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
           }}
         >
           {/* Icons row */}
-          <div style={{ display: "flex", gap: "10px" }}>
+          <div style={{ display: "flex", gap: "12px" }}>
             {member.icons.map((Icon, i) => (
               <div
                 key={i}
                 style={{
-                  width: "52px",
-                  height: "52px",
+                  width: "64px",
+                  height: "64px",
                   borderRadius: "50%",
                   background: "var(--paper)",
                   border: "1px solid var(--hair)",
@@ -142,19 +142,19 @@ function FlipCard({ member, index, inView }: { member: TeamMember; index: number
                   color: "#0C2340",
                 }}
               >
-                <Icon size={22} />
+                <Icon size={28} />
               </div>
             ))}
           </div>
 
           <div>
-            <p className="font-semibold mb-1" style={{ color: "var(--navy)", fontSize: "0.95rem", letterSpacing: "-0.01em" }}>
+            <p className="font-semibold mb-2" style={{ color: "var(--navy)", fontSize: "1.15rem", letterSpacing: "-0.015em" }}>
               {member.role}
             </p>
-            <p className="text-xs mb-3" style={{ color: "var(--mist)" }}>
+            <p className="text-sm mb-3" style={{ color: "var(--mist)" }}>
               {member.discipline}
             </p>
-            <p className="text-xs" style={{ color: "#AD8A52", letterSpacing: "0.02em" }}>
+            <p className="text-xs" style={{ color: "#AD8A52", letterSpacing: "0.04em" }}>
               {member.company}
             </p>
           </div>
