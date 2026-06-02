@@ -86,7 +86,7 @@ export function Navigation() {
           {/* CTA + hamburger */}
           <div className="flex items-center gap-4">
             <Link
-              href="/contact"
+              href="/contact#contact"
               className="contact-btn hidden md:inline-flex items-center px-4 py-2 text-sm font-medium"
               style={{ color: "#C2A065", borderRadius: "3px" }}
             >
@@ -134,7 +134,7 @@ export function Navigation() {
             </Link>
           ))}
           <Link
-            href="/contact"
+            href="/contact#contact"
             className="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium mt-2"
             style={{
               background: "rgba(173,138,82,0.12)",
