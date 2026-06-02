@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// Module-level flag: survives client-side navigation but resets on full page
+// load/refresh — exactly the right behaviour (show on first load, skip on nav).
+let splashHasPlayed = false;
+
 interface SplashScreenProps {
   onComplete: () => void;
 }
@@ -35,7 +39,7 @@ function SplashArch() {
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: [0, 1, 0.7] }}
-        transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
       />
 
       {/* Square SVG — viewBox 100×100, rendered 100%×100% of container.
@@ -55,7 +59,7 @@ function SplashArch() {
           strokeWidth="0.6"
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 1.6, delay: 0.3, ease: "easeInOut" }}
+          transition={{ duration: 1.1, delay: 0.2, ease: "easeInOut" }}
         />
 
         {/* Foundation bar — uses pathLength so no transform-origin issues in SVG */}
@@ -66,7 +70,7 @@ function SplashArch() {
           strokeLinecap="round"
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 0.7, delay: 1.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
         />
 
         {/* Framework lines */}
@@ -83,7 +87,7 @@ function SplashArch() {
             strokeWidth="0.8"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 0.45, delay: 1.9 + i * 0.1 }}
+            transition={{ duration: 0.3, delay: 1.4 + i * 0.07 }}
           />
         ))}
 
@@ -97,7 +101,7 @@ function SplashArch() {
           initial={{ opacity: 0, y: -10, scale: 0.75 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           style={{ transformOrigin: "50% 18%" }}
-          transition={{ duration: 0.6, delay: 2.35, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.45, delay: 1.75, ease: [0.16, 1, 0.3, 1] }}
         />
 
         {/* Completion ripple */}
@@ -109,7 +113,7 @@ function SplashArch() {
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: [0, 0.6, 0], scale: [0.92, 1.07] }}
           style={{ transformOrigin: "50% 47%" }}
-          transition={{ duration: 1, delay: 2.85, ease: "easeOut" }}
+          transition={{ duration: 0.7, delay: 2.2, ease: "easeOut" }}
         />
       </svg>
     </div>
@@ -118,21 +122,20 @@ function SplashArch() {
 
 export function SplashScreen({ onComplete }: SplashScreenProps) {
   const [exiting, setExiting] = useState(false);
-  const [skip] = useState(() =>
-    typeof window !== "undefined" && sessionStorage.getItem("ks_splash") === "1"
-  );
+  // Read once at mount — if already played this JS session, skip instantly.
+  const [skip] = useState(() => splashHasPlayed);
 
   useEffect(() => {
-    if (skip || sessionStorage.getItem("ks_splash") === "1") {
+    if (skip) {
       onComplete();
       return;
     }
-    sessionStorage.setItem("ks_splash", "1");
+    splashHasPlayed = true;
 
     const exitTimer = setTimeout(() => {
       setExiting(true);
       setTimeout(onComplete, 700);
-    }, 3500);
+    }, 2400);
 
     return () => clearTimeout(exitTimer);
   }, [onComplete, skip]);
@@ -166,7 +169,7 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
               style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 2.0, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.5, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
             >
               <span className="font-semibold text-white" style={{ fontSize: "20px", letterSpacing: "-0.01em" }}>
                 Keystone
