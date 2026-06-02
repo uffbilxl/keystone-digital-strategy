@@ -1,50 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readFileSync, existsSync, writeFileSync } from "fs";
-import { join } from "path";
+import { readSubmissions, writeSubmissions } from "@/lib/submissions";
+import type { Submission } from "@/lib/submission-types";
 
-const ADMIN_PASSWORD = "keystoneadmin1";
-const FILE = join(process.cwd(), "data", "submissions.json");
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "keystoneadmin1";
 
-function readSubmissions() {
-  if (!existsSync(FILE)) return [];
-  try {
-    return JSON.parse(readFileSync(FILE, "utf-8"));
-  } catch {
-    return [];
-  }
-}
-
-function writeSubmissions(data: unknown[]) {
-  writeFileSync(FILE, JSON.stringify(data, null, 2));
+function auth(req: NextRequest) {
+  return req.headers.get("x-admin-password") === ADMIN_PASSWORD;
 }
 
 export async function GET(req: NextRequest) {
-  const pw = req.headers.get("x-admin-password");
-  if (pw !== ADMIN_PASSWORD) {
-    return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
-  }
-  return NextResponse.json({ submissions: readSubmissions() });
+  if (!auth(req)) return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
+  const submissions = await readSubmissions();
+  return NextResponse.json({ submissions });
 }
 
 export async function PATCH(req: NextRequest) {
-  const pw = req.headers.get("x-admin-password");
-  if (pw !== ADMIN_PASSWORD) {
-    return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
-  }
+  if (!auth(req)) return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
   const { id, read } = await req.json();
-  const submissions = readSubmissions() as { id: string; read: boolean }[];
-  const updated = submissions.map((s) => (s.id === id ? { ...s, read } : s));
-  writeSubmissions(updated);
+  const submissions = await readSubmissions() as Submission[];
+  await writeSubmissions(submissions.map((s) => (s.id === id ? { ...s, read } : s)));
   return NextResponse.json({ success: true });
 }
 
 export async function DELETE(req: NextRequest) {
-  const pw = req.headers.get("x-admin-password");
-  if (pw !== ADMIN_PASSWORD) {
-    return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
-  }
+  if (!auth(req)) return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
   const { id } = await req.json();
-  const submissions = readSubmissions() as { id: string }[];
-  writeSubmissions(submissions.filter((s) => s.id !== id));
+  const submissions = await readSubmissions() as Submission[];
+  await writeSubmissions(submissions.filter((s) => s.id !== id));
   return NextResponse.json({ success: true });
 }

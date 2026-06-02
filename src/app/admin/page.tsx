@@ -2,16 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { LogoMark } from "@/components/Logo";
-
-interface Submission {
-  id: string;
-  name: string;
-  company: string;
-  email: string;
-  challenge: string;
-  receivedAt: string;
-  read: boolean;
-}
+import type { Submission } from "@/lib/submission-types";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleString("en-GB", {

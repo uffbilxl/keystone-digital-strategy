@@ -1,27 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
-import { join } from "path";
-
-const DATA_DIR = join(process.cwd(), "data");
-const FILE = join(DATA_DIR, "submissions.json");
-
-function readSubmissions() {
-  if (!existsSync(FILE)) {
-    mkdirSync(DATA_DIR, { recursive: true });
-    writeFileSync(FILE, "[]");
-    return [];
-  }
-  try {
-    return JSON.parse(readFileSync(FILE, "utf-8"));
-  } catch {
-    return [];
-  }
-}
-
-function writeSubmissions(data: unknown[]) {
-  mkdirSync(DATA_DIR, { recursive: true });
-  writeFileSync(FILE, JSON.stringify(data, null, 2));
-}
+import { readSubmissions, writeSubmissions } from "@/lib/submissions";
+import type { Submission } from "@/lib/submission-types";
 
 export async function POST(req: NextRequest) {
   try {
@@ -32,8 +11,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const submissions = readSubmissions();
-    const entry = {
+    const submissions = await readSubmissions();
+    const entry: Submission = {
       id: Date.now().toString(),
       name,
       company: company || "",
@@ -44,10 +23,11 @@ export async function POST(req: NextRequest) {
     };
 
     submissions.unshift(entry);
-    writeSubmissions(submissions);
+    await writeSubmissions(submissions);
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error("[contact] save error:", err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
