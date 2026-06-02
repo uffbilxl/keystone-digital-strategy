@@ -29,6 +29,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_GB",
     siteName: "Keystone Digital Strategy",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Keystone Digital Strategy - Leading tech firm",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
