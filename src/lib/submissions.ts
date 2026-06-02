@@ -1,53 +1,31 @@
-// Unified submission store.
-// • Production (Vercel KV env vars present): stores in Redis KV — persists forever.
-// • Development / no KV vars: falls back to data/submissions.json on disk.
+// Submission store — zero configuration required.
+//
+// • Vercel production: writes to /tmp/ks-submissions.json
+//   /tmp is writable on every serverless function instance.
+//   Persists while the function is warm (typically hours/days).
+//
+// • Local dev: writes to data/submissions.json in the project root.
 
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
+import { join } from "path";
 import type { Submission } from "./submission-types";
 
-const KV_KEY = "ks:submissions";
-const isKV = !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
+// /tmp is writable on Vercel; use local data/ in dev
+const DIR  = process.env.VERCEL ? "/tmp" : join(process.cwd(), "data");
+const FILE = join(DIR, "ks-submissions.json");
 
-// ─── KV helpers ───────────────────────────────────────────────────────────────
-async function kvRead(): Promise<Submission[]> {
-  const { kv } = await import("@vercel/kv");
-  const data = await kv.get<Submission[]>(KV_KEY);
-  return data ?? [];
-}
-
-async function kvWrite(data: Submission[]): Promise<void> {
-  const { kv } = await import("@vercel/kv");
-  await kv.set(KV_KEY, data);
-}
-
-// ─── File helpers (dev / no-KV fallback) ──────────────────────────────────────
-function fileRead(): Submission[] {
-  const { readFileSync, existsSync, mkdirSync, writeFileSync } = require("fs") as typeof import("fs");
-  const { join } = require("path") as typeof import("path");
-  const dir = join(process.cwd(), "data");
-  const file = join(dir, "submissions.json");
-  if (!existsSync(file)) {
-    mkdirSync(dir, { recursive: true });
-    writeFileSync(file, "[]");
+export function readSubmissions(): Submission[] {
+  if (!existsSync(FILE)) return [];
+  try {
+    return JSON.parse(readFileSync(FILE, "utf-8"));
+  } catch {
     return [];
   }
-  try { return JSON.parse(readFileSync(file, "utf-8")); } catch { return []; }
 }
 
-function fileWrite(data: Submission[]): void {
-  const { writeFileSync, mkdirSync } = require("fs") as typeof import("fs");
-  const { join } = require("path") as typeof import("path");
-  const dir = join(process.cwd(), "data");
-  mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, "submissions.json"), JSON.stringify(data, null, 2));
-}
-
-// ─── Public API ───────────────────────────────────────────────────────────────
-export async function readSubmissions(): Promise<Submission[]> {
-  if (isKV) return kvRead();
-  return fileRead();
-}
-
-export async function writeSubmissions(data: Submission[]): Promise<void> {
-  if (isKV) return kvWrite(data);
-  fileWrite(data);
+export function writeSubmissions(data: Submission[]): void {
+  if (!process.env.VERCEL) {
+    mkdirSync(DIR, { recursive: true });
+  }
+  writeFileSync(FILE, JSON.stringify(data, null, 2));
 }
