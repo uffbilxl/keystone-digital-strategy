@@ -61,20 +61,45 @@ export function Hero() {
         </motion.p>
 
         {/* CTAs */}
-        <motion.div {...fade(0.3)} className="mt-10 flex items-center gap-6">
+        <motion.div {...fade(0.3)} className="mt-10 flex flex-wrap items-center gap-4">
           <a
             href="#services"
             onClick={(e) => { e.preventDefault(); scrollTo("services"); }}
-            className="text-sm font-semibold transition-opacity duration-200 hover:opacity-70"
-            style={{ color: "#AD8A52", letterSpacing: "0.04em" }}
+            className="group inline-flex items-center gap-2.5 px-6 py-3 text-sm font-semibold transition-all duration-200"
+            style={{
+              background: "#AD8A52",
+              color: "#fff",
+              letterSpacing: "0.04em",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "#C2A065"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "#AD8A52"; }}
           >
-            Our Services →
+            Our Services
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" style={{ transition: "transform 0.2s ease" }}
+              className="group-hover:translate-x-1"
+            >
+              <path d="M3 8h10M9 4l4 4-4 4" />
+            </svg>
           </a>
           <a
             href="#contact"
             onClick={(e) => { e.preventDefault(); scrollTo("contact"); }}
-            className="text-sm font-medium transition-opacity duration-200 hover:opacity-70"
-            style={{ color: "rgba(255,255,255,0.5)", letterSpacing: "0.04em" }}
+            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium transition-all duration-200"
+            style={{
+              color: "rgba(255,255,255,0.65)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              letterSpacing: "0.04em",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "#fff";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)";
+              e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "rgba(255,255,255,0.65)";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+              e.currentTarget.style.background = "transparent";
+            }}
           >
             Get in Touch
           </a>

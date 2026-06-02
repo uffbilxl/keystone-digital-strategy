@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const services = [
   {
@@ -84,6 +84,7 @@ const services = [
 function ServiceCard({ svc, index }: { svc: typeof services[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-8% 0px" });
+  const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
@@ -91,15 +92,24 @@ function ServiceCard({ svc, index }: { svc: typeof services[0]; index: number })
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: index * 0.08 }}
-      className="flex flex-col p-8"
-      style={{ background: "#fff", border: "1px solid var(--hair)" }}
+      className="flex flex-col p-8 cursor-default"
+      style={{
+        background: "#fff",
+        borderTop: `2px solid ${hovered ? "#AD8A52" : "var(--hair)"}`,
+        borderLeft: "1px solid var(--hair)",
+        borderRight: "1px solid var(--hair)",
+        borderBottom: "1px solid var(--hair)",
+        transition: "border-color 0.2s ease",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       {/* Header */}
       <div className="flex items-start justify-between mb-7">
-        <span className="text-xs" style={{ color: "var(--mist)", letterSpacing: "0.12em" }}>
+        <span className="text-xs" style={{ color: hovered ? "#AD8A52" : "var(--mist)", letterSpacing: "0.12em", transition: "color 0.2s ease" }}>
           {svc.index}
         </span>
-        <div style={{ color: "var(--navy)" }}>
+        <div style={{ color: hovered ? "#AD8A52" : "var(--navy)", transition: "color 0.2s ease" }}>
           {svc.icon}
         </div>
       </div>

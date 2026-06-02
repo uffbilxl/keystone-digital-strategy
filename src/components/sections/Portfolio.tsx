@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const projects = [
   { n: "01", tag: "Brand Identity" },
@@ -15,6 +15,7 @@ const projects = [
 export function Portfolio() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10% 0px" });
+  const [hovered, setHovered] = useState<string | null>(null);
 
   return (
     <section
@@ -51,19 +52,37 @@ export function Portfolio() {
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.5, delay: i * 0.06 }}
-              className="flex flex-col justify-between p-8"
+              className="flex flex-col justify-between p-8 cursor-default"
               style={{
                 aspectRatio: "1",
                 border: "1px solid var(--hair)",
                 marginTop: "-1px",
                 marginLeft: "-1px",
+                background: hovered === p.n ? "var(--paper)" : "#fff",
+                transition: "background 0.2s ease",
               }}
+              onMouseEnter={() => setHovered(p.n)}
+              onMouseLeave={() => setHovered(null)}
             >
-              <span className="text-xs" style={{ color: "var(--mist)", letterSpacing: "0.1em" }}>
+              <span
+                className="text-xs font-medium"
+                style={{
+                  color: hovered === p.n ? "var(--navy)" : "var(--mist)",
+                  letterSpacing: "0.1em",
+                  transition: "color 0.2s ease",
+                }}
+              >
                 {p.n}
               </span>
               <div>
-                <p className="text-xs font-medium uppercase mb-1" style={{ color: "var(--mist)", letterSpacing: "0.18em" }}>
+                <p
+                  className="text-xs font-semibold uppercase mb-1.5"
+                  style={{
+                    color: hovered === p.n ? "#AD8A52" : "var(--mist)",
+                    letterSpacing: "0.18em",
+                    transition: "color 0.2s ease",
+                  }}
+                >
                   {p.tag}
                 </p>
                 <p className="text-xs" style={{ color: "var(--hair)" }}>

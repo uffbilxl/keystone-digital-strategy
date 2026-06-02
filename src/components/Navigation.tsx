@@ -66,12 +66,16 @@ export function Navigation() {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="text-xs font-medium uppercase tracking-widest transition-colors duration-200"
-                style={{ color: "rgba(255,255,255,0.62)", letterSpacing: "0.18em" }}
+                className="relative text-xs font-medium uppercase group"
+                style={{ color: "rgba(255,255,255,0.62)", letterSpacing: "0.18em", transition: "color 0.2s ease" }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.62)")}
               >
                 {link.label}
+                <span
+                  className="absolute -bottom-0.5 left-0 h-px w-0 group-hover:w-full"
+                  style={{ background: "#AD8A52", transition: "width 0.25s ease" }}
+                />
               </a>
             ))}
           </nav>

@@ -142,8 +142,16 @@ export function About() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: 0.2 + i * 0.07 }}
-                className="flex flex-col gap-5 p-6"
-                style={{ background: "#fff", border: "1px solid var(--hair)" }}
+                className="flex flex-col gap-5 p-6 cursor-default"
+                style={{ background: "#fff", border: "1px solid var(--hair)", transition: "border-color 0.2s ease, box-shadow 0.2s ease" }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(173,138,82,0.4)";
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 20px rgba(12,35,64,0.06)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLDivElement).style.borderColor = "var(--hair)";
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+                }}
               >
                 {/* Icon */}
                 <div
