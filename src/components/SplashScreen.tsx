@@ -166,15 +166,30 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
             <SplashArch />
 
             <motion.div
-              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}
-              initial={{ opacity: 0, y: 8 }}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="font-semibold text-white" style={{ fontSize: "20px", letterSpacing: "-0.01em" }}>
+              <span style={{
+                fontFamily: "var(--font-playfair), Georgia, serif",
+                fontStyle: "italic",
+                fontWeight: 600,
+                fontSize: "30px",
+                letterSpacing: "-0.01em",
+                color: "#fff",
+                lineHeight: 1,
+              }}>
                 Keystone
               </span>
-              <span className="font-medium" style={{ color: "rgba(255,255,255,0.35)", fontSize: "10px", letterSpacing: "0.04em" }}>
+              <span style={{
+                fontFamily: "var(--font-inter), sans-serif",
+                fontWeight: 400,
+                color: "rgba(255,255,255,0.35)",
+                fontSize: "9px",
+                letterSpacing: "0.22em",
+                textTransform: "uppercase" as const,
+              }}>
                 Digital Strategy
               </span>
             </motion.div>

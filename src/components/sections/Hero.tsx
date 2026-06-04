@@ -149,6 +149,62 @@ function HeroArch({ springX, springY }: { springX: ReturnType<typeof useSpring>;
   );
 }
 
+function ServicesMarquee() {
+  const items = [
+    "Brand Identity",
+    "Social Media Management",
+    "Web Development",
+    "Cybersecurity Testing",
+    "AI Promotional Videos",
+    "LinkedIn Management",
+    "Social Media Branding",
+  ];
+  const doubled = [...items, ...items];
+  return (
+    <motion.div
+      style={{ overflow: "hidden", borderTop: "1px solid rgba(255,255,255,0.05)" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.2, delay: 2.2 }}
+    >
+      <motion.div
+        style={{ display: "flex", alignItems: "center", width: "max-content", padding: "16px 0" }}
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
+      >
+        {doubled.flatMap((item, i) => [
+          <span
+            key={`t-${i}`}
+            style={{
+              fontSize: "10px",
+              fontWeight: 500,
+              letterSpacing: "0.14em",
+              color: "rgba(255,255,255,0.2)",
+              textTransform: "uppercase",
+              whiteSpace: "nowrap",
+              marginRight: "2.5rem",
+            }}
+          >
+            {item}
+          </span>,
+          <span
+            key={`d-${i}`}
+            style={{
+              width: "3px",
+              height: "3px",
+              borderRadius: "50%",
+              background: "rgba(173,138,82,0.5)",
+              flexShrink: 0,
+              display: "inline-block",
+              marginRight: "2.5rem",
+            }}
+          />,
+        ])}
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
 
@@ -212,13 +268,49 @@ export function Hero() {
         style={{ paddingTop: "6rem", paddingBottom: "2rem", y: contentY, opacity: contentOpacity, zIndex: 10 }}
       >
         <h1
-          className="font-semibold text-white"
-          style={{ fontSize: "clamp(2.6rem,7vw,6.5rem)", letterSpacing: "-0.03em", lineHeight: "1.05", maxWidth: "820px" }}
+          style={{
+            fontFamily: "var(--font-playfair), Georgia, serif",
+            fontWeight: 700,
+            color: "#fff",
+            fontSize: "clamp(3rem,7.5vw,7rem)",
+            letterSpacing: "-0.03em",
+            lineHeight: "1.05",
+            maxWidth: "820px",
+          }}
         >
           <RevealLine delay={0.3}>Brands built.</RevealLine>
           <RevealLine delay={0.45}>Websites secured.</RevealLine>
           <RevealLine delay={0.6}>
-            <span style={{ color: "#AD8A52" }}>Done right.</span>
+            <span style={{ color: "#AD8A52", fontStyle: "italic", position: "relative", display: "inline-block", overflow: "hidden" }}>
+              Done right.
+              <motion.span
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  width: "55%",
+                  background: "linear-gradient(90deg, transparent, rgba(255,225,140,0.22), transparent)",
+                  pointerEvents: "none",
+                }}
+                initial={{ x: "-100%" }}
+                animate={{ x: "220%" }}
+                transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 7, ease: "easeInOut", delay: 4 }}
+              />
+            </span>
+            <motion.span
+              style={{
+                display: "inline-block",
+                width: "4px",
+                height: "0.7em",
+                background: "#AD8A52",
+                marginLeft: "10px",
+                verticalAlign: "middle",
+                borderRadius: "2px",
+              }}
+              animate={{ opacity: [1, 1, 0, 0] }}
+              transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut", delay: 1.8, repeatType: "mirror" }}
+            />
           </RevealLine>
         </h1>
 
@@ -226,10 +318,9 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
-          style={{ marginTop: "2rem", color: "rgba(255,255,255,0.42)", fontSize: "clamp(0.95rem,1.4vw,1.1rem)", maxWidth: "380px", lineHeight: "1.8", fontWeight: 400 }}
+          style={{ marginTop: "2rem", color: "rgba(255,255,255,0.42)", fontSize: "clamp(0.95rem,1.4vw,1.1rem)", maxWidth: "520px", lineHeight: "1.85", fontWeight: 400 }}
         >
-          Brand identities, websites, and cybersecurity testing.
-          Delivered by a four-person specialist team.
+          Six specialist services under one roof. Brand identity, social media, web development, cybersecurity, AI video, and LinkedIn management. Delivered end-to-end by a senior specialist team.
         </motion.p>
 
         <motion.div
@@ -264,10 +355,35 @@ export function Hero() {
           </a>
         </motion.div>
 
+        {/* Service tags */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          style={{ marginTop: "2.2rem", display: "flex", flexWrap: "wrap", gap: "8px" }}
+        >
+          {["Brand Identity", "Web Dev", "Cybersecurity", "Social Media", "AI Video", "LinkedIn"].map((tag) => (
+            <span
+              key={tag}
+              style={{
+                fontSize: "11px",
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.3)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                padding: "5px 13px",
+                letterSpacing: "0.05em",
+                background: "rgba(255,255,255,0.02)",
+              }}
+            >
+              {tag}
+            </span>
+          ))}
+        </motion.div>
+
         {/* Scroll indicator */}
         <motion.div
           className="flex items-center gap-3"
-          style={{ marginTop: "3.5rem" }}
+          style={{ marginTop: "3rem" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.6, duration: 1 }}
@@ -281,6 +397,11 @@ export function Hero() {
           </div>
         </motion.div>
       </motion.div>
+
+      {/* Services marquee */}
+      <div className="relative" style={{ zIndex: 10 }}>
+        <ServicesMarquee />
+      </div>
 
       {/* Stats strip — own opacity so it lingers much longer on scroll */}
       <motion.div
