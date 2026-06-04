@@ -280,7 +280,7 @@ export function Hero() {
         >
           <RevealLine delay={0.3}>Brands built.</RevealLine>
           <RevealLine delay={0.45}>Websites secured.</RevealLine>
-          <RevealLine delay={0.6}>
+          <RevealLine delay={0.6} style={{ paddingBottom: "0.22em", marginBottom: "-0.22em" }}>
             <span style={{ color: "#AD8A52", fontStyle: "italic", position: "relative", display: "inline-block", overflow: "hidden" }}>
               Done right.
               <motion.span
