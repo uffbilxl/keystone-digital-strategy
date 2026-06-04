@@ -309,20 +309,20 @@ export function Hero() {
                 animate={{ x: "220%" }}
                 transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 7, ease: "easeInOut", delay: 4 }}
               />
+              <motion.span
+                style={{
+                  display: "inline-block",
+                  width: "4px",
+                  height: "0.72em",
+                  background: "#AD8A52",
+                  marginLeft: "10px",
+                  verticalAlign: "middle",
+                  borderRadius: "2px",
+                }}
+                animate={{ opacity: [1, 1, 0, 0] }}
+                transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut", delay: 1.8, repeatType: "mirror" }}
+              />
             </span>
-            <motion.span
-              style={{
-                display: "inline-block",
-                width: "4px",
-                height: "0.7em",
-                background: "#AD8A52",
-                marginLeft: "10px",
-                verticalAlign: "middle",
-                borderRadius: "2px",
-              }}
-              animate={{ opacity: [1, 1, 0, 0] }}
-              transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut", delay: 1.8, repeatType: "mirror" }}
-            />
           </RevealLine>
         </h1>
 
