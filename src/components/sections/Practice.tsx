@@ -88,6 +88,25 @@ const services = [
       </svg>
     ),
   },
+  {
+    n: "05",
+    title: "Social Media Management",
+    summary: "Consistent presence, real engagement, measurable growth.",
+    outcomes: [
+      "LinkedIn profile & company page management",
+      "Content creation & monthly scheduling",
+      "Community engagement & DM handling",
+      "Monthly analytics & performance report",
+      "Hashtag & audience growth strategy",
+    ],
+    engagement: "Ongoing monthly retainer. Onboarding in the first week.",
+    icon: (
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.4">
+        <rect x="2" y="2" width="20" height="20" rx="5" />
+        <path d="M7 17V10M12 17V7M17 17v-4" />
+      </svg>
+    ),
+  },
 ];
 
 function ServiceCard({ svc, index, inView }: { svc: typeof services[0]; index: number; inView: boolean }) {
