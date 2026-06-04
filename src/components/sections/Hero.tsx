@@ -277,7 +277,7 @@ export function Hero() {
       {/* Main content — vertically centred, never touches nav or bottom strip */}
       <motion.div
         className="relative flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full px-6 md:px-10"
-        style={{ paddingTop: "6rem", paddingBottom: "2rem", y: contentY, opacity: contentOpacity, zIndex: 10 }}
+        style={{ paddingTop: "8.5rem", paddingBottom: "2rem", y: contentY, opacity: contentOpacity, zIndex: 10 }}
       >
         <h1
           style={{
@@ -293,7 +293,7 @@ export function Hero() {
           <RevealLine delay={0.3}>Brands built.</RevealLine>
           <RevealLine delay={0.45}>Websites secured.</RevealLine>
           <RevealLine delay={0.6} style={{ paddingBottom: "0.22em", marginBottom: "-0.22em" }}>
-            <span style={{ color: "#AD8A52", fontStyle: "italic", position: "relative", display: "inline-block" }}>
+            <span style={{ color: "#AD8A52", fontStyle: "italic", position: "relative", display: "inline-block", overflow: "hidden", paddingBottom: "0.2em" }}>
               Done right.
               <motion.span
                 style={{
