@@ -107,6 +107,26 @@ const services = [
       </svg>
     ),
   },
+  {
+    n: "06",
+    title: "AI Promotional Videos",
+    summary: "Scroll-stopping videos built with AI — real voices, clean captions, zero production overhead.",
+    outcomes: [
+      "Generative AI video production",
+      "Natural, human-sounding AI voiceover",
+      "Custom captions styled to your brand",
+      "Tailored scripts per product or campaign",
+      "Optimised for social, ads & web",
+    ],
+    engagement: "Per video or monthly package. First draft in 3–5 days.",
+    icon: (
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.4">
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <path d="M10 8l6 3.5-6 3.5V8z" />
+        <path d="M7 21h10M12 17v4" />
+      </svg>
+    ),
+  },
 ];
 
 function ServiceCard({ svc, index, inView }: { svc: typeof services[0]; index: number; inView: boolean }) {

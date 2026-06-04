@@ -12,7 +12,7 @@ export default function ServicesPage() {
       <PageHero
         label="Services"
         title="What we offer"
-        description="Five specialist services. Delivered end-to-end by the same senior team on every engagement."
+        description="Six specialist services. Delivered end-to-end by the same senior team on every engagement."
       />
       <Practice />
     </>
