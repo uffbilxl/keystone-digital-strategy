@@ -110,7 +110,7 @@ const services = [
   {
     n: "06",
     title: "AI Promotional Videos",
-    summary: "Scroll-stopping videos built with AI — real voices, clean captions, zero production overhead.",
+    summary: "Scroll-stopping AI videos with real voices, clean captions, and zero production overhead.",
     outcomes: [
       "Generative AI video production",
       "Natural, human-sounding AI voiceover",
