@@ -166,7 +166,7 @@ function ServicesMarquee() {
         position: "absolute",
         top: "64px",
         right: 0,
-        width: "58%",
+        width: "100%",
         overflow: "hidden",
         zIndex: 20,
         borderBottom: "1px solid rgba(173,138,82,0.12)",
