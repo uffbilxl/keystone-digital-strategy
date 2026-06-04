@@ -162,27 +162,37 @@ function ServicesMarquee() {
   const doubled = [...items, ...items];
   return (
     <motion.div
-      style={{ overflow: "hidden", borderTop: "1px solid rgba(255,255,255,0.05)" }}
+      style={{
+        position: "absolute",
+        top: "64px",
+        right: 0,
+        width: "58%",
+        overflow: "hidden",
+        zIndex: 20,
+        borderBottom: "1px solid rgba(173,138,82,0.12)",
+        WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+        maskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+      }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1.2, delay: 2.2 }}
+      transition={{ duration: 1.2, delay: 2 }}
     >
       <motion.div
-        style={{ display: "flex", alignItems: "center", width: "max-content", padding: "16px 0" }}
+        style={{ display: "flex", alignItems: "center", width: "max-content", padding: "11px 0" }}
         animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
       >
         {doubled.flatMap((item, i) => [
           <span
             key={`t-${i}`}
             style={{
               fontSize: "10px",
-              fontWeight: 500,
-              letterSpacing: "0.14em",
-              color: "rgba(255,255,255,0.2)",
+              fontWeight: 600,
+              letterSpacing: "0.13em",
+              color: "rgba(194,160,101,0.85)",
               textTransform: "uppercase",
               whiteSpace: "nowrap",
-              marginRight: "2.5rem",
+              marginRight: "2rem",
             }}
           >
             {item}
@@ -193,10 +203,10 @@ function ServicesMarquee() {
               width: "3px",
               height: "3px",
               borderRadius: "50%",
-              background: "rgba(173,138,82,0.5)",
+              background: "rgba(173,138,82,0.55)",
               flexShrink: 0,
               display: "inline-block",
-              marginRight: "2.5rem",
+              marginRight: "2rem",
             }}
           />,
         ])}
@@ -262,6 +272,8 @@ export function Hero() {
         <HeroArch springX={springX} springY={springY} />
       </motion.div>
 
+      <ServicesMarquee />
+
       {/* Main content — vertically centred, never touches nav or bottom strip */}
       <motion.div
         className="relative flex-1 flex flex-col justify-center max-w-6xl mx-auto w-full px-6 md:px-10"
@@ -318,7 +330,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
-          style={{ marginTop: "2rem", color: "rgba(255,255,255,0.42)", fontSize: "clamp(0.95rem,1.4vw,1.1rem)", maxWidth: "520px", lineHeight: "1.85", fontWeight: 400 }}
+          style={{ marginTop: "2rem", color: "rgba(255,255,255,0.72)", fontSize: "clamp(0.95rem,1.4vw,1.1rem)", maxWidth: "520px", lineHeight: "1.85", fontWeight: 400 }}
         >
           Six specialist services under one roof. Brand identity, social media, web development, cybersecurity, AI video, and LinkedIn management. Delivered end-to-end by a senior specialist team.
         </motion.p>
@@ -347,9 +359,9 @@ export function Hero() {
             href="#contact"
             onClick={(e) => { e.preventDefault(); scrollTo("contact"); }}
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium"
-            style={{ color: "rgba(255,255,255,0.6)", border: "1px solid rgba(255,255,255,0.18)", letterSpacing: "0.02em", transition: "all 0.2s ease" }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.48)"; e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)"; e.currentTarget.style.background = "transparent"; }}
+            style={{ color: "rgba(255,255,255,0.85)", border: "1px solid rgba(255,255,255,0.32)", letterSpacing: "0.02em", transition: "all 0.2s ease" }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.6)"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.85)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.32)"; e.currentTarget.style.background = "transparent"; }}
           >
             Get in Touch
           </a>
@@ -368,11 +380,11 @@ export function Hero() {
               style={{
                 fontSize: "11px",
                 fontWeight: 500,
-                color: "rgba(255,255,255,0.3)",
-                border: "1px solid rgba(255,255,255,0.1)",
+                color: "rgba(255,255,255,0.65)",
+                border: "1px solid rgba(255,255,255,0.2)",
                 padding: "5px 13px",
                 letterSpacing: "0.05em",
-                background: "rgba(255,255,255,0.02)",
+                background: "rgba(255,255,255,0.05)",
               }}
             >
               {tag}
@@ -398,11 +410,6 @@ export function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Services marquee */}
-      <div className="relative" style={{ zIndex: 10 }}>
-        <ServicesMarquee />
-      </div>
-
       {/* Stats strip — own opacity so it lingers much longer on scroll */}
       <motion.div
         className="relative max-w-6xl mx-auto w-full px-6 md:px-10 pb-10"
@@ -422,7 +429,7 @@ export function Hero() {
               transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
             >
               <span className="font-semibold text-white" style={{ fontSize: "1.5rem", letterSpacing: "-0.025em" }}>{n}</span>
-              <span style={{ color: "rgba(255,255,255,0.28)", fontSize: "0.7rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{label}</span>
+              <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.7rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{label}</span>
             </motion.div>
           ))}
           <motion.div
