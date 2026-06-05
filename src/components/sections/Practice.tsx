@@ -10,6 +10,7 @@ import {
   useTransform,
 } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 import { ParticleCanvas } from "../ParticleCanvas";
 
 const services = [
@@ -263,17 +264,20 @@ export function Practice() {
               What we offer
             </motion.h2>
           </div>
-          <motion.a
+          <motion.div
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
-            href="#contact"
-            onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
-            className="text-sm font-medium transition-opacity duration-200 hover:opacity-50 flex-shrink-0"
-            style={{ color: "#C2A065" }}
+            className="flex-shrink-0"
           >
-            Get a quote →
-          </motion.a>
+            <Link
+              href="/contact"
+              className="text-sm font-medium transition-opacity duration-200 hover:opacity-50"
+              style={{ color: "#C2A065" }}
+            >
+              Get a quote →
+            </Link>
+          </motion.div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ background: "rgba(159,176,190,0.06)" }}>

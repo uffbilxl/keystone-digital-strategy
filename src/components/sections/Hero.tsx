@@ -9,6 +9,7 @@ import {
   useMotionTemplate,
 } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 import { ParticleCanvas } from "../ParticleCanvas";
 import { LogoMark } from "../Logo";
 
@@ -342,9 +343,8 @@ export function Hero() {
           className="flex flex-wrap items-center gap-4"
           style={{ marginTop: "2.5rem" }}
         >
-          <a
-            href="#services"
-            onClick={(e) => { e.preventDefault(); scrollTo("services"); }}
+          <Link
+            href="/services"
             className="group inline-flex items-center gap-2.5 px-6 py-3 text-sm font-semibold transition-all duration-200"
             style={{ background: "#AD8A52", color: "#fff", letterSpacing: "0.02em" }}
             onMouseEnter={(e) => { e.currentTarget.style.background = "#C2A065"; }}
@@ -354,17 +354,16 @@ export function Hero() {
             <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-1 transition-transform duration-200">
               <path d="M3 8h10M9 4l4 4-4 4" />
             </svg>
-          </a>
-          <a
-            href="#contact"
-            onClick={(e) => { e.preventDefault(); scrollTo("contact"); }}
+          </Link>
+          <Link
+            href="/contact"
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium"
             style={{ color: "rgba(255,255,255,0.85)", border: "1px solid rgba(255,255,255,0.32)", letterSpacing: "0.02em", transition: "all 0.2s ease" }}
             onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.6)"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.85)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.32)"; e.currentTarget.style.background = "transparent"; }}
           >
             Get in Touch
-          </a>
+          </Link>
         </motion.div>
 
         {/* Service tags */}
