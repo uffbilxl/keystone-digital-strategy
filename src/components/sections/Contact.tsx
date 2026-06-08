@@ -10,6 +10,14 @@ export function Contact() {
   const [form, setForm] = useState({ name: "", company: "", email: "", challenge: "" });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  function copyEmail() {
+    navigator.clipboard.writeText("contact@keystonedigitalstrategy.co.uk").then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -127,7 +135,29 @@ export function Contact() {
                   </div>
                   <div className="flex flex-col gap-0.5">
                     <span className="text-xs uppercase" style={{ color: "rgba(255,255,255,0.3)", letterSpacing: "0.2em" }}>{label}</span>
-                    <span className="text-sm" style={{ color: "rgba(255,255,255,0.72)" }}>{value}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm" style={{ color: "rgba(255,255,255,0.72)" }}>{value}</span>
+                      {label === "Email" && (
+                        <button
+                          onClick={copyEmail}
+                          title={copied ? "Copied!" : "Copy email"}
+                          style={{ color: copied ? "#C2A065" : "rgba(255,255,255,0.28)", background: "none", border: "none", cursor: "pointer", padding: "2px", lineHeight: 1, transition: "color 0.2s" }}
+                          onMouseEnter={(e) => { if (!copied) e.currentTarget.style.color = "rgba(255,255,255,0.6)"; }}
+                          onMouseLeave={(e) => { if (!copied) e.currentTarget.style.color = "rgba(255,255,255,0.28)"; }}
+                        >
+                          {copied ? (
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          ) : (
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                            </svg>
+                          )}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
