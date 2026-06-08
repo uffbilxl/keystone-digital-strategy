@@ -1,6 +1,3 @@
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
-import { join } from "path";
-
 export interface ClientAccount {
   id: string;
   clientName: string;
@@ -10,21 +7,24 @@ export interface ClientAccount {
   createdAt: string;
 }
 
-const DIR  = process.env.VERCEL ? "/tmp" : join(process.cwd(), "data");
-const FILE = join(DIR, "ks-clients.json");
+const KV_KEY = "ks-clients";
 
-export function readClientAccounts(): ClientAccount[] {
-  if (!existsSync(FILE)) return [];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function getKV(): Promise<any> {
+  const { kv } = await import("@vercel/kv");
+  return kv;
+}
+
+export async function readClientAccounts(): Promise<ClientAccount[]> {
   try {
-    return JSON.parse(readFileSync(FILE, "utf-8"));
+    const kv = await getKV();
+    return ((await kv.get(KV_KEY)) as ClientAccount[] | null) ?? [];
   } catch {
     return [];
   }
 }
 
-export function writeClientAccounts(data: ClientAccount[]): void {
-  if (!process.env.VERCEL) {
-    mkdirSync(DIR, { recursive: true });
-  }
-  writeFileSync(FILE, JSON.stringify(data, null, 2));
+export async function writeClientAccounts(data: ClientAccount[]): Promise<void> {
+  const kv = await getKV();
+  await kv.set(KV_KEY, data);
 }

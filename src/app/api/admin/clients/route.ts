@@ -10,7 +10,7 @@ function auth(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
-  return NextResponse.json({ clients: readClientAccounts() });
+  return NextResponse.json({ clients: await readClientAccounts() });
 }
 
 export async function POST(req: NextRequest) {
@@ -24,20 +24,20 @@ export async function POST(req: NextRequest) {
     notes: notes ?? "",
     createdAt: new Date().toISOString(),
   };
-  writeClientAccounts([...readClientAccounts(), newClient]);
+  await writeClientAccounts([...await readClientAccounts(), newClient]);
   return NextResponse.json({ client: newClient });
 }
 
 export async function PATCH(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
   const { id, ...updates } = await req.json();
-  writeClientAccounts(readClientAccounts().map((c) => (c.id === id ? { ...c, ...updates } : c)));
+  await writeClientAccounts((await readClientAccounts()).map((c) => (c.id === id ? { ...c, ...updates } : c)));
   return NextResponse.json({ success: true });
 }
 
 export async function DELETE(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
   const { id } = await req.json();
-  writeClientAccounts(readClientAccounts().filter((c) => c.id !== id));
+  await writeClientAccounts((await readClientAccounts()).filter((c) => c.id !== id));
   return NextResponse.json({ success: true });
 }

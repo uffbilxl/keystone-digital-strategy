@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const submissions = readSubmissions();
+    const submissions = await readSubmissions();
     const entry: Submission = {
       id: Date.now().toString(),
       name,
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     };
 
     submissions.unshift(entry);
-    writeSubmissions(submissions);
+    await writeSubmissions(submissions);
 
     return NextResponse.json({ success: true });
   } catch (err) {

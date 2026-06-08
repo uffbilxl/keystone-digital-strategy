@@ -10,20 +10,20 @@ function auth(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
-  return NextResponse.json({ submissions: readSubmissions() });
+  return NextResponse.json({ submissions: await readSubmissions() });
 }
 
 export async function PATCH(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
   const { id, read } = await req.json();
-  const submissions = readSubmissions() as Submission[];
-  writeSubmissions(submissions.map((s) => (s.id === id ? { ...s, read } : s)));
+  const submissions = await readSubmissions() as Submission[];
+  await writeSubmissions(submissions.map((s) => (s.id === id ? { ...s, read } : s)));
   return NextResponse.json({ success: true });
 }
 
 export async function DELETE(req: NextRequest) {
   if (!auth(req)) return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
   const { id } = await req.json();
-  writeSubmissions((readSubmissions() as Submission[]).filter((s) => s.id !== id));
+  await writeSubmissions((await readSubmissions() as Submission[]).filter((s) => s.id !== id));
   return NextResponse.json({ success: true });
 }
