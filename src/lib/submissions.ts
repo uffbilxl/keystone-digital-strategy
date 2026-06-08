@@ -1,23 +1,21 @@
+import { Redis } from "@upstash/redis";
 import type { Submission } from "./submission-types";
 
-const KV_KEY = "ks-submissions";
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL!,
+  token: process.env.KV_REST_API_TOKEN!,
+});
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function getKV(): Promise<any> {
-  const { kv } = await import("@vercel/kv");
-  return kv;
-}
+const KEY = "ks-submissions";
 
 export async function readSubmissions(): Promise<Submission[]> {
   try {
-    const kv = await getKV();
-    return ((await kv.get(KV_KEY)) as Submission[] | null) ?? [];
+    return ((await redis.get(KEY)) as Submission[] | null) ?? [];
   } catch {
     return [];
   }
 }
 
 export async function writeSubmissions(data: Submission[]): Promise<void> {
-  const kv = await getKV();
-  await kv.set(KV_KEY, data);
+  await redis.set(KEY, data);
 }

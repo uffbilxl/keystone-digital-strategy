@@ -1,3 +1,5 @@
+import { Redis } from "@upstash/redis";
+
 export interface ClientAccount {
   id: string;
   clientName: string;
@@ -7,24 +9,21 @@ export interface ClientAccount {
   createdAt: string;
 }
 
-const KV_KEY = "ks-clients";
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL!,
+  token: process.env.KV_REST_API_TOKEN!,
+});
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function getKV(): Promise<any> {
-  const { kv } = await import("@vercel/kv");
-  return kv;
-}
+const KEY = "ks-clients";
 
 export async function readClientAccounts(): Promise<ClientAccount[]> {
   try {
-    const kv = await getKV();
-    return ((await kv.get(KV_KEY)) as ClientAccount[] | null) ?? [];
+    return ((await redis.get(KEY)) as ClientAccount[] | null) ?? [];
   } catch {
     return [];
   }
 }
 
 export async function writeClientAccounts(data: ClientAccount[]): Promise<void> {
-  const kv = await getKV();
-  await kv.set(KV_KEY, data);
+  await redis.set(KEY, data);
 }
