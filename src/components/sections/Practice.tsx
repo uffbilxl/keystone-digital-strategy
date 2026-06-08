@@ -16,6 +16,7 @@ import { ParticleCanvas } from "../ParticleCanvas";
 const services = [
   {
     n: "01",
+    id: "brand-identity",
     title: "Brand Identity",
     summary: "We craft identities that mean something.",
     outcomes: [
@@ -43,6 +44,7 @@ const services = [
       "Story & reel templates",
       "Launch-ready asset pack",
     ],
+    id: "social-media-branding",
     engagement: "Standalone or bundled with Brand Identity. 1–2 weeks.",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -62,6 +64,7 @@ const services = [
       "CMS integration if needed",
       "Performance optimised",
     ],
+    id: "web-development",
     engagement: "2–6 weeks depending on scope. Hosting setup included.",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -81,6 +84,7 @@ const services = [
       "Security header & SSL audit",
       "Remediation guidance",
     ],
+    id: "cybersecurity-testing",
     engagement: "Delivered post-build or as a standalone audit. 1–2 weeks.",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -100,6 +104,7 @@ const services = [
       "Monthly analytics & performance report",
       "Hashtag & audience growth strategy",
     ],
+    id: "social-media-management",
     engagement: "Ongoing monthly retainer. Onboarding in the first week.",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -119,6 +124,7 @@ const services = [
       "Tailored scripts per product or campaign",
       "Optimised for social, ads & web",
     ],
+    id: "ai-promotional-videos",
     engagement: "Per video or monthly package. First draft in 3–5 days.",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -156,6 +162,7 @@ function ServiceCard({ svc, index, inView }: { svc: typeof services[0]; index: n
   return (
     <motion.div
       ref={cardRef}
+      id={svc.id}
       initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: index * 0.1 }}

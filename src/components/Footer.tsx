@@ -8,12 +8,12 @@ const sections = [
   {
     heading: "Services",
     items: [
-      { label: "Brand Identity", href: "/services" },
-      { label: "Social Media Branding", href: "/services" },
-      { label: "Web Development", href: "/services" },
-      { label: "Cybersecurity Testing", href: "/services" },
-      { label: "Social Media Management", href: "/services" },
-      { label: "AI Promotional Videos", href: "/services" },
+      { label: "Brand Identity", href: "/services#brand-identity" },
+      { label: "Social Media Branding", href: "/services#social-media-branding" },
+      { label: "Web Development", href: "/services#web-development" },
+      { label: "Cybersecurity Testing", href: "/services#cybersecurity-testing" },
+      { label: "Social Media Management", href: "/services#social-media-management" },
+      { label: "AI Promotional Videos", href: "/services#ai-promotional-videos" },
     ],
   },
   {
