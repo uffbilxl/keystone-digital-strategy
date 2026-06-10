@@ -51,6 +51,12 @@ export function Footer() {
             <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.38)", maxWidth: "280px", lineHeight: "1.75" }}>
               Brand identity, web development, and cybersecurity testing. Delivered by specialists.
             </p>
+            <address className="not-italic mt-5" style={{ color: "rgba(255,255,255,0.28)", fontSize: "12px", lineHeight: "1.9", letterSpacing: "0.02em" }}>
+              Keystone Digital Strategy Limited<br />
+              3rd Floor, 45 Albemarle Street<br />
+              Mayfair, London<br />
+              W1S 4JL
+            </address>
             <div className="flex items-center gap-2 mt-5">
               <a
                 href={`mailto:${EMAIL}`}
@@ -119,7 +125,7 @@ export function Footer() {
             © {new Date().getFullYear()} Keystone Digital Strategy. All rights reserved.
           </p>
           <p className="text-xs" style={{ color: "rgba(255,255,255,0.22)", letterSpacing: "0.04em" }}>
-            Mayfair, London
+            45 Albemarle Street, Mayfair, London W1S 4JL
           </p>
         </div>
       </div>
