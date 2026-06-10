@@ -229,13 +229,13 @@ export function Hero() {
   const bgGlow = useMotionTemplate`radial-gradient(700px circle at ${glowBgX}% ${glowBgY}%, rgba(173,138,82,0.07), transparent 60%)`;
 
   const { scrollY } = useScroll();
-  const contentY = useTransform(scrollY, [0, 700], [0, -90]);
-  const contentOpacity = useTransform(scrollY, [0, 450], [1, 0]);
-  // Stats stay fully visible until 400px scroll, then fade slowly to 900px
-  const statsOpacity = useTransform(scrollY, [400, 900], [1, 0]);
-  const statsY = useTransform(scrollY, [0, 900], [0, -40]);
-  const archScrollY = useTransform(scrollY, [0, 700], [0, -45]);
-  const particlesScrollY = useTransform(scrollY, [0, 700], [0, 32]);
+  const contentY = useTransform(scrollY, [0, 950], [0, -90]);
+  const contentOpacity = useTransform(scrollY, [120, 750], [1, 0]);
+  // Stats stay fully visible until 550px scroll, then fade slowly to 1100px
+  const statsOpacity = useTransform(scrollY, [550, 1100], [1, 0]);
+  const statsY = useTransform(scrollY, [0, 1100], [0, -40]);
+  const archScrollY = useTransform(scrollY, [0, 950], [0, -45]);
+  const particlesScrollY = useTransform(scrollY, [0, 950], [0, 32]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = heroRef.current?.getBoundingClientRect();
@@ -344,13 +344,13 @@ export function Hero() {
           style={{ marginTop: "2.5rem" }}
         >
           <Link
-            href="/services"
+            href="/work"
             className="group inline-flex items-center gap-2.5 px-6 py-3 text-sm font-semibold transition-all duration-200"
             style={{ background: "#AD8A52", color: "#fff", letterSpacing: "0.02em" }}
             onMouseEnter={(e) => { e.currentTarget.style.background = "#C2A065"; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = "#AD8A52"; }}
           >
-            Our Services
+            Our Work
             <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-1 transition-transform duration-200">
               <path d="M3 8h10M9 4l4 4-4 4" />
             </svg>

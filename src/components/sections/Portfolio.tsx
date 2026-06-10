@@ -6,17 +6,18 @@ import Image from "next/image";
 import { ParticleCanvas } from "../ParticleCanvas";
 
 // ─── Project data ─────────────────────────────────────────────────────────────
+const featuredProject = {
+  n: "01",
+  name: "On The Go Juice",
+  url: "https://onthegojuice.vercel.app",
+  tags: ["Web Development", "Brand Identity", "Security Tested"],
+  sector: "Health & Wellness · UK Startup",
+  desc: "Storefront and brand identity for a UK cold-pressed juice startup. Subscription-first design built to convert health-conscious visitors into recurring customers.",
+  slides: ["/screenshots/onthegojuice/1.jpg", "/screenshots/onthegojuice/2.jpg", "/screenshots/onthegojuice/3.jpg"],
+  strip: false,
+};
+
 const projects = [
-  {
-    n: "01",
-    name: "On The Go Juice",
-    url: "https://onthegojuice.vercel.app",
-    tags: ["Web Development", "Brand Identity", "Security Tested"],
-    sector: "Health & Wellness · UK Startup",
-    desc: "Storefront and brand identity for a UK cold-pressed juice startup. Subscription-first design built to convert health-conscious visitors into recurring customers.",
-    slides: ["/screenshots/onthegojuice/1.jpg", "/screenshots/onthegojuice/2.jpg", "/screenshots/onthegojuice/3.jpg"],
-    strip: false,
-  },
   {
     n: "02",
     name: "BCU Student Computing Association",
@@ -65,16 +66,6 @@ const projects = [
     sector: "Food & Beverage · International",
     desc: "Premium website for a halal-certified Pakistani restaurant in Islamabad specialising in grilled burgers and BBQ. Designed to capture walk-in footfall and online orders.",
     slides: ["/screenshots/sizzleandseekh/1.jpg", "/screenshots/sizzleandseekh/2.jpg", "/screenshots/sizzleandseekh/3.jpg"],
-    strip: false,
-  },
-  {
-    n: "07",
-    name: "BCU Law & Debating Society",
-    url: "https://bculawsociety.com",
-    tags: ["Web Development", "Brand Identity", "Security Tested"],
-    sector: "Education · Student Society",
-    desc: "Platform for Birmingham City University's Law & Debating Society. Built to support mock trials, networking events, and career development resources for aspiring legal professionals.",
-    slides: ["/screenshots/bculawsociety/1.jpg", "/screenshots/bculawsociety/2.jpg", "/screenshots/bculawsociety/3.jpg"],
     strip: false,
   },
 ];
@@ -241,6 +232,73 @@ function Tag({ label }: { label: string }) {
   );
 }
 
+// ─── Featured card ────────────────────────────────────────────────────────────
+function FeaturedCard({ project, inView }: { project: typeof featuredProject; inView: boolean }) {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 36 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0 }}
+      className="group overflow-hidden"
+      style={{ background: "rgba(10,29,53,0.95)", border: "1px solid rgba(173,138,82,0.22)", transition: "border-color 0.3s ease" }}
+      whileHover={{ borderColor: "rgba(173,138,82,0.45)" } as never}
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-2">
+        {/* Media — left side on desktop, full-width on mobile */}
+        <div className="relative" style={{ minHeight: "280px" }}>
+          <Carousel slides={project.slides} />
+        </div>
+
+        {/* Body — right side */}
+        <div className="flex flex-col justify-between p-8 gap-6">
+          <div className="flex flex-col gap-4">
+            {/* Featured label */}
+            <div className="flex items-center gap-3">
+              <span
+                className="text-xs font-semibold uppercase px-3 py-1"
+                style={{ background: "rgba(173,138,82,0.12)", color: "#AD8A52", letterSpacing: "0.16em", border: "1px solid rgba(173,138,82,0.3)" }}
+              >
+                Featured Project
+              </span>
+            </div>
+
+            {/* Tags */}
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag) => <Tag key={tag} label={tag} />)}
+            </div>
+
+            {/* Name + sector */}
+            <div>
+              <h3 className="font-semibold text-white" style={{ fontSize: "clamp(1.2rem,2vw,1.6rem)", letterSpacing: "-0.02em", lineHeight: "1.25", marginBottom: "4px" }}>
+                {project.name}
+              </h3>
+              <p style={{ color: "rgba(255,255,255,0.25)", fontSize: "11px" }}>{project.sector}</p>
+            </div>
+
+            {/* Description */}
+            <p className="text-sm" style={{ color: "rgba(255,255,255,0.5)", lineHeight: "1.8" }}>
+              {project.desc}
+            </p>
+          </div>
+
+          {/* CTA */}
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 self-start"
+            style={{ background: "#AD8A52", color: "#fff", letterSpacing: "0.02em", transition: "background 0.2s ease" }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "#C2A065"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "#AD8A52"; }}
+          >
+            View Live →
+          </a>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
 // ─── Project card ──────────────────────────────────────────────────────────────
 function ProjectCard({ project, index, inView }: { project: typeof projects[0]; index: number; inView: boolean }) {
   return (
@@ -355,13 +413,18 @@ export function Portfolio() {
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {[{ n: "7", label: "shown here" }, { n: "100+", label: "delivered" }].map(({ n, label }) => (
+            {[{ n: "6", label: "shown here" }, { n: "100+", label: "delivered" }].map(({ n, label }) => (
               <div key={label} className="flex flex-col gap-0.5">
                 <span className="font-semibold text-white" style={{ fontSize: "1.4rem", letterSpacing: "-0.025em" }}>{n}</span>
                 <span style={{ color: "rgba(255,255,255,0.28)", fontSize: "11px" }}>{label}</span>
               </div>
             ))}
           </motion.div>
+        </div>
+
+        {/* Featured project */}
+        <div className="mb-6">
+          <FeaturedCard project={featuredProject} inView={inView} />
         </div>
 
         {/* Grid */}
