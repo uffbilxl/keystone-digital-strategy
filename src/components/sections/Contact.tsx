@@ -116,12 +116,12 @@ export function Contact() {
                   ),
                 },
                 {
-                  label: "Serving",
-                  value: "Clients Worldwide",
+                  label: "Based In",
+                  value: "Mayfair, London",
                   icon: (
                     <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <circle cx="10" cy="10" r="8" />
-                      <path d="M2 10h16M10 2a12 12 0 0 1 0 16M10 2a12 12 0 0 0 0 16" />
+                      <path d="M10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                      <path d="M10 2a7 7 0 0 1 7 7c0 5-7 11-7 11S3 14 3 9a7 7 0 0 1 7-7z" />
                     </svg>
                   ),
                 },

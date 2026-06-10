@@ -119,7 +119,7 @@ export function Footer() {
             © {new Date().getFullYear()} Keystone Digital Strategy. All rights reserved.
           </p>
           <p className="text-xs" style={{ color: "rgba(255,255,255,0.22)", letterSpacing: "0.04em" }}>
-            Worldwide
+            Mayfair, London
           </p>
         </div>
       </div>
