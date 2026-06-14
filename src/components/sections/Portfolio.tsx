@@ -47,6 +47,7 @@ const projects = [
     desc: "Full-service grocery supermarket platform emphasising quality, freshness, and competitive pricing. Clean, conversion-optimised storefront built to drive repeat purchases.",
     slides: ["/screenshots/umrah-marketplace/1.jpg", "/screenshots/umrah-marketplace/2.jpg", "/screenshots/umrah-marketplace/3.jpg"],
     strip: false,
+    beta: true,
   },
   {
     n: "05",
@@ -57,6 +58,7 @@ const projects = [
     desc: "Touch-first companion app for the Umrah Marketplace. Rebuilt the shopping experience for mobile users with streamlined navigation and a native-feeling interface.",
     slides: ["/screenshots/umrah-mobile/1.jpg", "/screenshots/umrah-mobile/2.jpg", "/screenshots/umrah-mobile/3.jpg", "/screenshots/umrah-mobile/4.jpg"],
     strip: true,
+    beta: true,
   },
   {
     n: "06",
@@ -67,6 +69,8 @@ const projects = [
     desc: "Premium website for a halal-certified Pakistani restaurant in Islamabad specialising in grilled burgers and BBQ. Designed to capture walk-in footfall and online orders.",
     slides: ["/screenshots/sizzleandseekh/1.jpg", "/screenshots/sizzleandseekh/2.jpg", "/screenshots/sizzleandseekh/3.jpg"],
     strip: false,
+    beta: true,
+    note: "Mobile optimisation is ongoing.",
   },
 ];
 
@@ -317,14 +321,26 @@ function ProjectCard({ project, index, inView }: { project: typeof projects[0]; 
         ) : (
           <Carousel slides={project.slides} />
         )}
-
       </div>
 
       {/* Body */}
       <div className="flex flex-col flex-1 p-6 gap-4">
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2">
+        {/* Tags + Beta badge */}
+        <div className="flex flex-wrap items-center gap-2">
           {project.tags.map((tag) => <Tag key={tag} label={tag} />)}
+          {project.beta && (
+            <span
+              className="text-xs font-semibold px-2.5 py-1"
+              style={{
+                color: "#818cf8",
+                border: "1px solid rgba(129,140,248,0.3)",
+                background: "rgba(129,140,248,0.07)",
+                letterSpacing: "0.06em",
+              }}
+            >
+              BETA
+            </span>
+          )}
         </div>
 
         {/* Name + sector */}
@@ -339,6 +355,13 @@ function ProjectCard({ project, index, inView }: { project: typeof projects[0]; 
         <p className="text-sm flex-1" style={{ color: "rgba(255,255,255,0.45)", lineHeight: "1.78" }}>
           {project.desc}
         </p>
+
+        {/* Inline note (e.g. mobile optimisation) */}
+        {project.note && (
+          <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)", fontStyle: "italic" }}>
+            {project.note}
+          </p>
+        )}
 
         {/* CTA */}
         <a
